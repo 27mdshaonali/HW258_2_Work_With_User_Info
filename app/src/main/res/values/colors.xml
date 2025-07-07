@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#6A7CFF</color>
+    <color name="background">#FFFFFFFF</color> <!-- White -->
+    <color name="primary_text">#FF000000</color> <!-- Black -->
+    <color name="secondary_text">#8A000000</color> <!-- Gray -->
+    <color name="accent">#FF4081</color> <!-- Pink (Brand Color) -->
+
+    <!-- Product Card -->
+    <color name="card_background">#FFF5F5F5</color> <!-- Light Gray -->
+    <color name="original_price">#8A000000</color> <!-- Gray -->
+    <color name="discounted_price">#4CAF50</color> <!-- Green -->
+    <color name="button_background">#FF4081</color> <!-- Pink -->
+    <color name="cart_text_color">#FFFFFFFF</color>
+</resources>
