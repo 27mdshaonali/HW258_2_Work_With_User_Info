@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    tools:context=".Sign_Up_Activity">
+
+
+    <!-- Main content container with surface color -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorSurface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <!-- Welcome text (initially hidden) -->
+
+
+        <!-- 10% Top Guideline -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topOfAppImageGuideline10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.06" />
+
+
+        <!-- App logo/image -->
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/appImage"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/appImageColorBackground"
+            android:padding="@dimen/_6sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/app_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topOfAppImageGuideline10"
+            app:riv_corner_radius="@dimen/_50sdp"
+            app:riv_mutate_background="true" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/btn_secondary"
+            android:textSize="@dimen/_17sdp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/spaceBetweenImageAndScroll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appImage"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <!-- Spacer view -->
+        <View
+            android:id="@+id/spaceBetweenImageAndScroll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="@dimen/_4sdp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/scrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.04"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appName" />
+
+
+        <!-- Scrollable content area -->
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:paddingStart="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_3sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spaceBetweenImageAndScroll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_15sdp">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/fullNameInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/btn_secondary"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/name2">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/userSignUpFullName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/name2"
+                        android:hint="Full Name"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/textPrimary"
+                        android:textColorHint="@color/textSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/enterEmailInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/btn_secondary"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fullNameInputLayout"
+                    app:startIconDrawable="@drawable/mail">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/userSignUpEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/mail"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/textPrimary"
+                        android:textColorHint="@color/textSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/enterPasswordInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/btn_secondary"
+                    app:endIconMode="password_toggle"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/enterEmailInputLayout"
+                    app:startIconDrawable="@drawable/password_signup">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/userSignUpEnterPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/password_signup"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/textPrimary"
+                        android:textColorHint="@color/textSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/reenterPasswordInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/btn_secondary"
+                    app:endIconMode="password_toggle"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/enterPasswordInputLayout"
+                    app:startIconDrawable="@drawable/password_signup">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/userSignUpReenterPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/password_signup"
+                        android:hint="Re - Password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/textPrimary"
+                        android:textColorHint="@color/textSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <TextView
+                    android:layout_marginTop="@dimen/_16sdp"
+                    app:layout_constraintTop_toBottomOf="@id/reenterPasswordInputLayout"
+                    android:id="@+id/mustContains"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Password must contains"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_14ssp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:layout_marginTop="@dimen/_4sdp"
+                    android:id="@+id/mustContainsNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/dot"
+                    android:text="At least 1 number (0...9)"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_12ssp"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:textStyle="italic|normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mustContains" />
+
+                <TextView
+                    android:id="@+id/mustContainsChar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/dot"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="At least 8 characters length"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="italic|normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mustContainsNumber" />
+
+                <TextView
+                    android:id="@+id/mustContainsLowerCase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/dot"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="At least 1 lowercase latter (a...z)"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="italic|normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mustContainsChar" />
+
+                <TextView
+                    android:id="@+id/mustContainsLowerUpperCase"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/dot"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="At least upper case letter (A...Z)"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="italic|normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mustContainsLowerCase" />
+
+                <TextView
+                    android:id="@+id/mustContainsSpecialSymbol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableStart="@drawable/dot"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:layout_marginStart="@dimen/_10sdp"
+                    android:text="At least 1 special symbol"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_12ssp"
+                    android:textStyle="italic|normal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mustContainsLowerUpperCase" />
+
+                <!-- Sign in button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/signUpButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_35sdp"
+                    android:background="@drawable/orange_button"
+                    android:text="Sign up"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_text"
+                    android:textSize="@dimen/_15ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/mustContainsSpecialSymbol" />
+
+                <!-- Social login divider -->
+                <View
+                    android:id="@+id/viewStart"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_35sdp"
+                    android:background="@color/textSecondary"
+                    app:layout_constraintEnd_toStartOf="@id/loginWith"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/signUpButton" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/loginWith"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:text="Sign up with"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_16ssp"
+                    app:layout_constraintBottom_toBottomOf="@id/viewStart"
+                    app:layout_constraintEnd_toStartOf="@id/viewEnd"
+                    app:layout_constraintStart_toEndOf="@id/viewStart"
+                    app:layout_constraintTop_toTopOf="@id/viewStart" />
+
+                <View
+                    android:id="@+id/viewEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/textSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/loginWith"
+                    app:layout_constraintTop_toTopOf="@id/viewStart" />
+
+                <!-- Social login buttons -->
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/signUpWithFB"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_6sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/facebook"
+                    app:layout_constraintEnd_toStartOf="@id/signUpWithX"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loginWith"
+                    app:layout_goneMarginStart="@dimen/_20sdp"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true" />
+
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/signUpWithX"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_6sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/x"
+                    app:layout_constraintBottom_toBottomOf="@id/signUpWithFB"
+                    app:layout_constraintEnd_toStartOf="@id/signUpWithGoogle"
+                    app:layout_constraintStart_toEndOf="@id/signUpWithFB"
+                    app:layout_constraintTop_toTopOf="@id/signUpWithFB"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/signUpWithGoogle"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_7sdp"
+                    android:padding="@dimen/_7sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/google"
+                    app:layout_constraintBottom_toBottomOf="@id/signUpWithX"
+                    app:layout_constraintEnd_toStartOf="@id/signUpWithGithub"
+                    app:layout_constraintStart_toEndOf="@id/signUpWithX"
+                    app:layout_constraintTop_toTopOf="@id/signUpWithX"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/signUpWithGithub"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_6sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/github"
+                    app:layout_constraintBottom_toBottomOf="@id/signUpWithGoogle"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/signUpWithGoogle"
+                    app:layout_constraintTop_toTopOf="@id/signUpWithGoogle"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true" />
+
+                <!-- Other social buttons (X, Google, GitHub) constrained similarly -->
+                <!-- ... -->
+
+                <!-- Sign up prompt -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/haveAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:text="Already have an account ?"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintEnd_toStartOf="@id/signIn"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/signUpWithFB" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/signIn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/_3sdp"
+                    android:text="Sign in"
+                    android:textColor="@color/btn_secondary"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintBottom_toBottomOf="@id/haveAccount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/haveAccount"
+                    app:layout_constraintTop_toTopOf="@id/haveAccount" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

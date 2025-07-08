@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".Sign_In_Activity">
+
+    <!-- Main content container with surface color -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorSurface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <!-- Welcome text (initially hidden) -->
+
+
+        <!-- 10% Top Guideline -->
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/topOfAppImageGuideline10"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.10" />
+
+
+        <!-- App logo/image -->
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/appImage"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_60sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:background="@color/appImageColorBackground"
+            android:padding="@dimen/_6sdp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/app_icon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topOfAppImageGuideline10"
+            app:riv_corner_radius="@dimen/_50sdp"
+            app:riv_mutate_background="true" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/btn_secondary"
+            android:textSize="@dimen/_17sdp"
+            android:textStyle="bold"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/spaceBetweenImageAndScroll"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appImage"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+
+        <!-- Spacer view -->
+        <View
+            android:id="@+id/spaceBetweenImageAndScroll"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:elevation="@dimen/_4sdp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@id/scrollView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.05"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appName" />
+
+
+        <!-- Scrollable content area -->
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:fillViewport="true"
+            android:paddingStart="@dimen/_3sdp"
+            android:paddingEnd="@dimen/_3sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/spaceBetweenImageAndScroll">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:paddingBottom="@dimen/_15sdp">
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/btn_secondary"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:startIconDrawable="@drawable/mail">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/userSignInEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/mail"
+                        android:hint="Email"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@color/textPrimary"
+                        android:textColorHint="@color/textSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordInputLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/btn_secondary"
+                    app:endIconMode="password_toggle"
+                    app:hintEnabled="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/emailInputLayout"
+                    app:startIconDrawable="@drawable/password_signup">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/userSignInPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/password_signup"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:textColor="@color/textPrimary"
+                        android:textColorHint="@color/textSecondary" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <androidx.appcompat.widget.AppCompatCheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_16sdp"
+                    android:text="Remember Me"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/passwordInputLayout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/forgotPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:paddingStart="@dimen/_3sdp"
+                    android:paddingTop="@dimen/_3sdp"
+                    android:paddingBottom="@dimen/_3sdp"
+                    android:text="Forgot password?"
+                    android:textColor="@color/btn_secondary"
+                    android:textSize="@dimen/_12ssp"
+                    app:layout_constraintBottom_toBottomOf="@id/checkBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/checkBox" />
+
+                <!-- Sign in button -->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/signInButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:background="@drawable/orange_button"
+                    android:text="Sign in"
+                    android:textAllCaps="false"
+                    android:textColor="@color/btn_text"
+                    android:textSize="@dimen/_15ssp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/checkBox" />
+
+                <!-- Social login divider -->
+                <View
+                    android:id="@+id/viewStart"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_35sdp"
+                    android:background="@color/textSecondary"
+                    app:layout_constraintEnd_toStartOf="@id/loginWith"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/signInButton" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/loginWith"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
+                    android:text="Sign in with"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_16ssp"
+                    app:layout_constraintBottom_toBottomOf="@id/viewStart"
+                    app:layout_constraintEnd_toStartOf="@id/viewEnd"
+                    app:layout_constraintStart_toEndOf="@id/viewStart"
+                    app:layout_constraintTop_toTopOf="@id/viewStart" />
+
+                <View
+                    android:id="@+id/viewEnd"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/_1sdp"
+                    android:background="@color/textSecondary"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/loginWith"
+                    app:layout_constraintTop_toTopOf="@id/viewStart" />
+
+                <!-- Social login buttons -->
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/logInWithFB"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:layout_marginStart="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_25sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_6sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/facebook"
+                    app:layout_constraintEnd_toStartOf="@id/logInWithX"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/loginWith"
+                    app:layout_goneMarginStart="@dimen/_20sdp"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true"
+                    app:riv_oval="true" />
+
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/logInWithX"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_6sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/x"
+                    app:layout_constraintBottom_toBottomOf="@id/logInWithFB"
+                    app:layout_constraintEnd_toStartOf="@id/logInWithGoogle"
+                    app:layout_constraintStart_toEndOf="@id/logInWithFB"
+                    app:layout_constraintTop_toTopOf="@id/logInWithFB"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/logInWithGoogle"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_7sdp"
+                    android:padding="@dimen/_7sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/google"
+                    app:layout_constraintBottom_toBottomOf="@id/logInWithFB"
+                    app:layout_constraintEnd_toStartOf="@id/logInWithGithub"
+                    app:layout_constraintStart_toEndOf="@id/logInWithX"
+                    app:layout_constraintTop_toTopOf="@id/logInWithFB"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/logInWithGithub"
+                    android:layout_width="@dimen/_42sdp"
+                    android:layout_height="@dimen/_42sdp"
+                    android:layout_marginEnd="@dimen/_20sdp"
+                    android:background="@color/appImageColorBackground"
+                    android:elevation="@dimen/_6sdp"
+                    android:padding="@dimen/_6sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/github"
+                    app:layout_constraintBottom_toBottomOf="@id/logInWithFB"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/logInWithGoogle"
+                    app:layout_constraintTop_toTopOf="@id/logInWithFB"
+                    app:riv_corner_radius="@dimen/_50sdp"
+                    app:riv_mutate_background="true" />
+
+                <!-- Other social buttons (X, Google, GitHub) constrained similarly -->
+                <!-- ... -->
+
+                <!-- Sign up prompt -->
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/notAccount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:text="Don't have an account ?"
+                    android:textColor="@color/textSecondary"
+                    android:textSize="@dimen/_13ssp"
+                    app:layout_constraintEnd_toStartOf="@id/signUp"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/logInWithFB" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/signUp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_4sdp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?attr/selectableItemBackground"
+                    android:padding="@dimen/_3sdp"
+                    android:text="Sign up"
+                    android:textColor="@color/btn_secondary"
+                    android:textSize="@dimen/_14ssp"
+                    app:layout_constraintBottom_toBottomOf="@id/notAccount"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/notAccount"
+                    app:layout_constraintTop_toTopOf="@id/notAccount" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
