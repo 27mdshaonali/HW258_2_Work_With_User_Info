@@ -71,4 +71,10 @@ dependencies {
     //noinspection UseTomlInstead
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
     implementation 'com.google.android.flexbox:flexbox:3.0.0'
+
+    //room db
+
+    implementation "androidx.room:room-runtime:2.7.2"
+    annotationProcessor "androidx.room:room-compiler:2.7.2"
+
 }
