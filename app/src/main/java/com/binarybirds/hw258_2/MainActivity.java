@@ -1,9 +1,14 @@
 package com.binarybirds.hw258_2;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +32,11 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<HashMap<String, String>> filteredList = new ArrayList<>();
 
     Spinner spinnerGender, spinnerRole, spinnerBloodGroup, spinnerCountry, spinnerState, spinnerSortBy;
-    TextView username, fullNameSet;
+    SearchView searchView;
+    RecyclerView recyclerView;
+    UserAdapter userAdapter;
 
+    TextView username, fullNameSet;
     String loggedUsername;
 
     @Override
@@ -41,13 +51,15 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Get Data
+        // Initialize
         userList = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("userList");
         loggedUsername = getIntent().getStringExtra("loggedUsername");
 
-        // Views
         username = findViewById(R.id.username);
         fullNameSet = findViewById(R.id.fullName);
+        searchView = findViewById(R.id.searchView);
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         spinnerGender = findViewById(R.id.spinnerGender);
         spinnerRole = findViewById(R.id.spinnerRole);
@@ -56,14 +68,13 @@ public class MainActivity extends AppCompatActivity {
         spinnerState = findViewById(R.id.spinnerState);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
 
-        // Greet User
+        // Greet logged-in user
         if (userList != null && loggedUsername != null) {
             for (HashMap<String, String> user : userList) {
                 if (loggedUsername.equals(user.get("userSignInUserName"))) {
                     String fullName = user.get("firstName") + " " + user.get("lastName");
                     fullNameSet.setText(fullName + "!");
                     username.setText("@" + loggedUsername);
-                    Toast.makeText(this, "Welcome " + fullName + "!", Toast.LENGTH_SHORT).show();
                     break;
                 }
             }
@@ -73,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Logged user not found", Toast.LENGTH_SHORT).show();
         }
 
-        // Spinner Data
+        // Prepare Spinner Options
         ArrayList<String> genderList = new ArrayList<>();
         genderList.add("Select Gender");
         genderList.add("male");
@@ -87,14 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> bloodGroupList = new ArrayList<>();
         bloodGroupList.add("Select Blood Group");
-        bloodGroupList.add("A+");
-        bloodGroupList.add("B+");
-        bloodGroupList.add("O+");
-        bloodGroupList.add("AB+");
-        bloodGroupList.add("A-");
-        bloodGroupList.add("B-");
-        bloodGroupList.add("O-");
-        bloodGroupList.add("AB-");
+        Collections.addAll(bloodGroupList, "A+", "B+", "O+", "AB+", "A-", "B-", "O-", "AB-");
 
         ArrayList<String> countryList = new ArrayList<>();
         countryList.add("Select Country");
@@ -104,12 +108,8 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> sortOptions = new ArrayList<>();
         sortOptions.add("Select Sort Option");
-        sortOptions.add("Age");
-        sortOptions.add("Height");
-        sortOptions.add("Name");
-        sortOptions.add("Role Priority");
+        Collections.addAll(sortOptions, "Age", "Height", "Name", "Role Priority");
 
-        // Fill country and state from userList
         if (userList != null) {
             HashSet<String> countries = new HashSet<>();
             HashSet<String> states = new HashSet<>();
@@ -129,11 +129,11 @@ public class MainActivity extends AppCompatActivity {
         spinnerState.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stateList));
         spinnerSortBy.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions));
 
-        // Spinner Change Listener
+        // Spinner Listeners
         AdapterView.OnItemSelectedListener filterListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                applyFiltersAndSort();
+                applyFiltersAndSort(searchView.getQuery().toString());
             }
 
             @Override
@@ -147,9 +147,29 @@ public class MainActivity extends AppCompatActivity {
         spinnerCountry.setOnItemSelectedListener(filterListener);
         spinnerState.setOnItemSelectedListener(filterListener);
         spinnerSortBy.setOnItemSelectedListener(filterListener);
+
+        // SearchView Listener
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                applyFiltersAndSort(query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                applyFiltersAndSort(newText);
+                return true;
+            }
+        });
+
+        // Set Initial Data
+        filteredList.addAll(userList);
+        userAdapter = new UserAdapter(this, filteredList);
+        recyclerView.setAdapter(userAdapter);
     }
 
-    private void applyFiltersAndSort() {
+    private void applyFiltersAndSort(String query) {
         filteredList.clear();
 
         String selectedGender = spinnerGender.getSelectedItem().toString();
@@ -171,10 +191,17 @@ public class MainActivity extends AppCompatActivity {
             if (!selectedState.equals("Select State") && !user.get("state").equalsIgnoreCase(selectedState))
                 continue;
 
+            if (query != null && !query.isEmpty()) {
+                String name = (user.get("firstName") + " " + user.get("lastName")).toLowerCase();
+                String email = user.get("email").toLowerCase();
+                String uname = user.get("userSignInUserName").toLowerCase();
+                if (!(name.contains(query.toLowerCase()) || email.contains(query.toLowerCase()) || uname.contains(query.toLowerCase())))
+                    continue;
+            }
+
             filteredList.add(user);
         }
 
-        // Sort the filtered list
         if (!selectedSort.equals("Select Sort Option")) {
             Collections.sort(filteredList, (a, b) -> {
                 switch (selectedSort) {
@@ -191,8 +218,7 @@ public class MainActivity extends AppCompatActivity {
             });
         }
 
-        // TODO: Update your RecyclerView adapter here with filteredList
-        Toast.makeText(this, "Filtered users: " + filteredList.size(), Toast.LENGTH_SHORT).show();
+        userAdapter.notifyDataSetChanged();
     }
 
     private int getRolePriority(String role) {
@@ -205,4 +231,56 @@ public class MainActivity extends AppCompatActivity {
                 return 3;
         }
     }
+
+    public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
+
+        private final Context context;
+        private final ArrayList<HashMap<String, String>> userList;
+
+        public UserAdapter(Context context, ArrayList<HashMap<String, String>> userList) {
+            this.context = context;
+            this.userList = userList;
+        }
+
+        @NonNull
+        @Override
+        public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(context).inflate(R.layout.user_info, parent, false);
+            return new UserViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+            HashMap<String, String> user = userList.get(position);
+
+            String fullName = user.get("firstName") + " " + user.get("lastName");
+            String positionStr = user.get("role");
+            String phone = user.get("phone");
+            String email = user.get("email");
+
+            holder.tvFullName.setText(fullName);
+            holder.tvPosition.setText(positionStr);
+            holder.tvPhone.setText(phone);
+            holder.tvEmail.setText(email);
+        }
+
+        @Override
+        public int getItemCount() {
+            return userList.size();
+        }
+
+        public class UserViewHolder extends RecyclerView.ViewHolder {
+            TextView tvFullName, tvUsername, tvEmail, tvPhone, tvPosition;
+
+            public UserViewHolder(@NonNull View itemView) {
+                super(itemView);
+                tvFullName = itemView.findViewById(R.id.nameUser);
+                tvPosition = itemView.findViewById(R.id.positionUser);
+                tvPhone = itemView.findViewById(R.id.phoneUser);
+                tvEmail = itemView.findViewById(R.id.emailUser);
+            }
+        }
+
+    }
+
 }
