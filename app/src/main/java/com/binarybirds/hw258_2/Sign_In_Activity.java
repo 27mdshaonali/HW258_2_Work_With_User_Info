@@ -82,10 +82,15 @@ public class Sign_In_Activity extends AppCompatActivity {
             }
 
             if (loggedInUser != null) {
+                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+
                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 intent.putExtra("userList", arrayList);
                 intent.putExtra("loggedUsername", loggedInUser.get("userSignInUserName"));
                 startActivity(intent);
+
+
+
             } else {
                 Toast.makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
             }
