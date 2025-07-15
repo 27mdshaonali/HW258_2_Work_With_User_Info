@@ -1,6 +1,7 @@
 package com.binarybirds.hw258_2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
@@ -15,11 +16,17 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -113,15 +120,23 @@ public class MainActivity extends AppCompatActivity {
         if (userList != null) {
             HashSet<String> countries = new HashSet<>();
             HashSet<String> states = new HashSet<>();
+
             for (HashMap<String, String> user : userList) {
-                countries.add(user.get("country"));
-                states.add(user.get("state"));
+                String country = user.get("country");
+                String state = user.get("state");
+
+                if (country != null && !country.trim().isEmpty()) {
+                    countries.add(country);
+                }
+                if (state != null && !state.trim().isEmpty()) {
+                    states.add(state);
+                }
             }
+
             countryList.addAll(countries);
             stateList.addAll(states);
         }
 
-        // Set Spinners
         spinnerGender.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genderList));
         spinnerRole.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, roleList));
         spinnerBloodGroup.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, bloodGroupList));
@@ -129,7 +144,6 @@ public class MainActivity extends AppCompatActivity {
         spinnerState.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stateList));
         spinnerSortBy.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions));
 
-        // Spinner Listeners
         AdapterView.OnItemSelectedListener filterListener = new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -148,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
         spinnerState.setOnItemSelectedListener(filterListener);
         spinnerSortBy.setOnItemSelectedListener(filterListener);
 
-        // SearchView Listener
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -257,11 +270,29 @@ public class MainActivity extends AppCompatActivity {
             String positionStr = user.get("role");
             String phone = user.get("phone");
             String email = user.get("email");
+            String imageUrl = user.get("image");
 
             holder.tvFullName.setText(fullName);
             holder.tvPosition.setText(positionStr);
             holder.tvPhone.setText(phone);
             holder.tvEmail.setText(email);
+
+            if (imageUrl != null && !imageUrl.isEmpty()) {
+                Picasso.get().load(imageUrl).into(holder.profileImage);
+            } else {
+                holder.profileImage.setImageResource(R.drawable.app_icon2);
+            }
+
+            holder.cardUser.setOnClickListener(v -> {
+                try {
+                    JSONObject userJson = new JSONObject(user);
+                    Intent intent = new Intent(context, UserDetailsActivity.class);
+                    intent.putExtra("userDataJson", userJson.toString());
+                    context.startActivity(intent);
+                } catch (Exception e) {
+                    Toast.makeText(context, "Error parsing user data", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
 
         @Override
@@ -271,6 +302,8 @@ public class MainActivity extends AppCompatActivity {
 
         public class UserViewHolder extends RecyclerView.ViewHolder {
             TextView tvFullName, tvUsername, tvEmail, tvPhone, tvPosition;
+            CardView cardUser;
+            RoundedImageView profileImage;
 
             public UserViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -278,9 +311,9 @@ public class MainActivity extends AppCompatActivity {
                 tvPosition = itemView.findViewById(R.id.positionUser);
                 tvPhone = itemView.findViewById(R.id.phoneUser);
                 tvEmail = itemView.findViewById(R.id.emailUser);
+                profileImage = itemView.findViewById(R.id.imageUser);
+                cardUser = itemView.findViewById(R.id.cardUser);
             }
         }
-
     }
-
 }
