@@ -29,12 +29,12 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String firstName = user.optString("firstName");
                 String lastName = user.optString("lastName");
                 String maidenName = user.optString("maidenName");
+                String username = user.optString("username");
+                String password = user.optString("password");
                 String age = user.optString("age");
                 String gender = user.optString("gender");
                 String email = user.optString("email");
                 String phone = user.optString("phone");
-                String username = user.optString("username");
-                String password = user.optString("password");
                 String birthDate = user.optString("birthDate");
                 String image = user.optString("image");
                 String bloodGroup = user.optString("bloodGroup");
@@ -49,21 +49,26 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String userAgent = user.optString("userAgent");
                 String role = user.optString("role");
 
-                // Hair
-                String hairColor = "", hairType = "";
+                // Hair (nested object)
                 JSONObject hair = user.optJSONObject("hair");
+                String hairColor = "", hairType = "";
                 if (hair != null) {
                     hairColor = hair.optString("color");
                     hairType = hair.optString("type");
 
+                    if (!hairColor.isEmpty()) {
+                        Toast.makeText(this, "Hair Color: " + hairColor, Toast.LENGTH_SHORT).show();
+                    }
 
+                    if (!hairType.isEmpty()) {
+                        Toast.makeText(this, "Hair Type: " + hairType, Toast.LENGTH_SHORT).show();
+                    }
                 }
 
-                Toast.makeText(this, "Hair color is: " + hairColor, Toast.LENGTH_SHORT).show();
-
-                // Address
+                // Address (nested object with nested coordinates)
                 String street = "", city = "", state = "", stateCode = "", postalCode = "", country = "";
                 double lat = 0, lng = 0;
+
                 JSONObject address = user.optJSONObject("address");
                 if (address != null) {
                     street = address.optString("address");
@@ -80,7 +85,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     }
                 }
 
-                // Bank
+                // Bank (nested)
                 String cardNumber = "", cardType = "", cardExpire = "", currency = "", iban = "";
                 JSONObject bank = user.optJSONObject("bank");
                 if (bank != null) {
@@ -91,9 +96,10 @@ public class UserDetailsActivity extends AppCompatActivity {
                     iban = bank.optString("iban");
                 }
 
-                // Company
+                // Company (nested with nested address and coordinates)
                 String department = "", companyName = "", title = "";
-                String companyStreet = "", companyCity = "", companyState = "", companyPostal = "", companyCountry = "";
+                String companyStreet = "", companyCity = "", companyState = "", companyPostalCode = "", companyCountry = "";
+
                 JSONObject company = user.optJSONObject("company");
                 if (company != null) {
                     department = company.optString("department");
@@ -105,12 +111,20 @@ public class UserDetailsActivity extends AppCompatActivity {
                         companyStreet = companyAddress.optString("address");
                         companyCity = companyAddress.optString("city");
                         companyState = companyAddress.optString("state");
-                        companyPostal = companyAddress.optString("postalCode");
+                        companyPostalCode = companyAddress.optString("postalCode");
                         companyCountry = companyAddress.optString("country");
+
+                        JSONObject companyCoordinates = companyAddress.optJSONObject("coordinates");
+                        if (companyCoordinates != null) {
+                            double companyLat = companyCoordinates.optDouble("lat");
+                            double companyLng = companyCoordinates.optDouble("lng");
+
+                            Toast.makeText(this, "Company Coordinates: (" + companyLat + ", " + companyLng + ")", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
 
-                // Crypto
+                // Crypto (nested)
                 String coin = "", wallet = "", network = "";
                 JSONObject crypto = user.optJSONObject("crypto");
                 if (crypto != null) {
@@ -119,7 +133,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     network = crypto.optString("network");
                 }
 
-                // Display output
+                // ✅ Output
                 String output = "ID: " + id +
                         "\nName: " + firstName + " " + lastName +
                         "\nMaiden Name: " + maidenName +
@@ -130,7 +144,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                         "\nEmail: " + email +
                         "\nPhone: " + phone +
                         "\nBirth Date: " + birthDate +
-                        "\nImage URL: " + image +
+                        "\nImage: " + image +
                         "\nBlood Group: " + bloodGroup +
                         "\nHeight: " + height +
                         "\nWeight: " + weight +
@@ -144,26 +158,19 @@ public class UserDetailsActivity extends AppCompatActivity {
                         "\nUser Agent: " + userAgent +
                         "\nRole: " + role +
 
-                        "\n\n📍 Address:\n" +
-                        street + ", " + city + ", " + state + " (" + stateCode + "), " +
-                        country + " - " + postalCode +
+                        "\n\n📍 Address:\n" + street + ", " + city + ", " + state + " (" + stateCode + "), " + country + " - " + postalCode +
                         "\nCoordinates: (" + lat + ", " + lng + ")" +
 
                         "\n\n🏦 Bank:\nCard: " + cardNumber + " (" + cardType + "), Exp: " + cardExpire +
                         "\nCurrency: " + currency + ", IBAN: " + iban +
 
-                        "\n\n🏢 Company:\n" +
-                        title + " at " + companyName +
+                        "\n\n🏢 Company:\n" + title + " at " + companyName +
                         "\nDepartment: " + department +
-                        "\nAddress: " + companyStreet + ", " + companyCity + ", " +
-                        companyState + ", " + companyCountry + " - " + companyPostal +
+                        "\nAddress: " + companyStreet + ", " + companyCity + ", " + companyState + ", " + companyCountry + " - " + companyPostalCode +
 
-                        "\n\n🪙 Crypto:\n" +
-                        "Coin: " + coin + ", Wallet: " + wallet + ", Network: " + network;
+                        "\n\n🪙 Crypto:\nCoin: " + coin + ", Wallet: " + wallet + ", Network: " + network;
 
                 tvOutput.setText(output);
-
-                Toast.makeText(this, "Username is: " + username, Toast.LENGTH_SHORT).show();
 
             } catch (Exception e) {
                 e.printStackTrace();

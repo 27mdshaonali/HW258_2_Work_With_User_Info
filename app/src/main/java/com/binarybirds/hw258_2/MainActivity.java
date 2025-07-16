@@ -30,18 +30,19 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 
 public class MainActivity extends AppCompatActivity {
 
-    ArrayList<HashMap<String, String>> arrayList, filteredList;
+    ArrayList<JSONObject> userList = new ArrayList<>();
+    ArrayList<JSONObject> filteredList = new ArrayList<>();
+
     Spinner spinnerGender, spinnerRole, spinnerBloodGroup, spinnerCountry, spinnerState, spinnerSortBy;
     SearchView searchView;
     RecyclerView recyclerView;
     UserAdapter userAdapter;
-    TextView fullName, username;
+
+    TextView username, fullNameSet;
     String loggedUsername;
 
     @Override
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         username = findViewById(R.id.username);
-        fullName = findViewById(R.id.fullName);
+        fullNameSet = findViewById(R.id.fullName);
         searchView = findViewById(R.id.searchView);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -68,26 +70,40 @@ public class MainActivity extends AppCompatActivity {
         spinnerState = findViewById(R.id.spinnerState);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
 
-        arrayList = (ArrayList<HashMap<String, String>>) getIntent().getSerializableExtra("userList");
-        filteredList = new ArrayList<>();
+        // Receive intent data
+        String jsonArrayString = getIntent().getStringExtra("userListJson");
         loggedUsername = getIntent().getStringExtra("loggedUsername");
 
-        if (arrayList == null || arrayList.isEmpty()) {
+        if (jsonArrayString == null) {
             Toast.makeText(this, "Error reading user list", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // greet
-        for (HashMap<String, String> user : arrayList) {
-            if (loggedUsername.equals(user.get("userSignInUserName"))) {
-                String fullNameText = user.get("firstName") + " " + user.get("lastName");
-                fullName.setText(fullNameText + "!");
-                username.setText("@" + loggedUsername);
-                break;
+        try {
+            JSONArray jsonArray = new JSONArray(jsonArrayString);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                userList.add(jsonArray.getJSONObject(i));
             }
+        } catch (Exception e) {
+            Toast.makeText(this, "Failed to parse user data", Toast.LENGTH_SHORT).show();
+            return;
         }
 
-        // spinners
+        if (userList != null && loggedUsername != null) {
+            for (JSONObject user : userList) {
+                if (loggedUsername.equals(user.optString("username"))) {
+                    String fullName = user.optString("firstName") + " " + user.optString("lastName");
+                    fullNameSet.setText(fullName + "!");
+                    username.setText("@" + loggedUsername);
+                    break;
+                }
+            }
+        } else {
+            fullNameSet.setText("User not found!");
+            username.setText("User not found!");
+        }
+
+        // Setup filter options
         ArrayList<String> genderList = new ArrayList<>();
         genderList.add("Select Gender");
         genderList.add("male");
@@ -109,57 +125,65 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<String> stateList = new ArrayList<>();
         stateList.add("Select State");
 
-        ArrayList<String> sortList = new ArrayList<>();
-        sortList.add("Select Sort Option");
-        Collections.addAll(sortList, "Age", "Height", "Name", "Role Priority");
+        ArrayList<String> sortOptions = new ArrayList<>();
+        sortOptions.add("Select Sort Option");
+        Collections.addAll(sortOptions, "Age", "Height", "Name", "Role Priority");
 
         HashSet<String> countries = new HashSet<>();
         HashSet<String> states = new HashSet<>();
 
-        for (HashMap<String, String> user : arrayList) {
-            String country = user.get("homeCountry");
-            String state = user.get("homeState");
-
-            if (country != null && !country.isEmpty()) countries.add(country);
-            if (state != null && !state.isEmpty()) states.add(state);
+        for (JSONObject user : userList) {
+            JSONObject address = user.optJSONObject("address");
+            if (address != null) {
+                String country = address.optString("country");
+                String state = address.optString("state");
+                if (!country.isEmpty()) countries.add(country);
+                if (!state.isEmpty()) states.add(state);
+            }
         }
 
         countryList.addAll(countries);
         stateList.addAll(states);
 
+        // Set spinner adapters
         spinnerGender.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genderList));
         spinnerRole.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, roleList));
         spinnerBloodGroup.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, bloodGroupList));
         spinnerCountry.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countryList));
         spinnerState.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, stateList));
-        spinnerSortBy.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortList));
+        spinnerSortBy.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions));
 
-        AdapterView.OnItemSelectedListener listener = new AdapterView.OnItemSelectedListener() {
-            @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        AdapterView.OnItemSelectedListener filterListener = new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 applyFiltersAndSort(searchView.getQuery().toString());
             }
-            @Override public void onNothingSelected(AdapterView<?> parent) { }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         };
 
-        spinnerGender.setOnItemSelectedListener(listener);
-        spinnerRole.setOnItemSelectedListener(listener);
-        spinnerBloodGroup.setOnItemSelectedListener(listener);
-        spinnerCountry.setOnItemSelectedListener(listener);
-        spinnerState.setOnItemSelectedListener(listener);
-        spinnerSortBy.setOnItemSelectedListener(listener);
+        spinnerGender.setOnItemSelectedListener(filterListener);
+        spinnerRole.setOnItemSelectedListener(filterListener);
+        spinnerBloodGroup.setOnItemSelectedListener(filterListener);
+        spinnerCountry.setOnItemSelectedListener(filterListener);
+        spinnerState.setOnItemSelectedListener(filterListener);
+        spinnerSortBy.setOnItemSelectedListener(filterListener);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override public boolean onQueryTextSubmit(String query) {
                 applyFiltersAndSort(query);
                 return true;
             }
+
             @Override public boolean onQueryTextChange(String newText) {
                 applyFiltersAndSort(newText);
                 return true;
             }
         });
 
-        filteredList.addAll(arrayList);
+        // Set adapter
+        filteredList.addAll(userList);
         userAdapter = new UserAdapter(this, filteredList);
         recyclerView.setAdapter(userAdapter);
     }
@@ -172,43 +196,48 @@ public class MainActivity extends AppCompatActivity {
         String bloodGroup = spinnerBloodGroup.getSelectedItem().toString();
         String country = spinnerCountry.getSelectedItem().toString();
         String state = spinnerState.getSelectedItem().toString();
-        String sort = spinnerSortBy.getSelectedItem().toString();
+        String sortBy = spinnerSortBy.getSelectedItem().toString();
 
-        for (HashMap<String, String> user : arrayList) {
-            if (!gender.equals("Select Gender") && !user.get("gender").equalsIgnoreCase(gender)) continue;
-            if (!role.equals("Select Role") && !user.get("role").equalsIgnoreCase(role)) continue;
-            if (!bloodGroup.equals("Select Blood Group") && !user.get("bloodGroup").equalsIgnoreCase(bloodGroup)) continue;
-            if (!country.equals("Select Country") && !user.get("homeCountry").equalsIgnoreCase(country)) continue;
-            if (!state.equals("Select State") && !user.get("homeState").equalsIgnoreCase(state)) continue;
+        for (JSONObject user : userList) {
+            if (!gender.equals("Select Gender") && !user.optString("gender").equalsIgnoreCase(gender)) continue;
+            if (!role.equals("Select Role") && !user.optString("role").equalsIgnoreCase(role)) continue;
+            if (!bloodGroup.equals("Select Blood Group") && !user.optString("bloodGroup").equalsIgnoreCase(bloodGroup)) continue;
+
+            JSONObject address = user.optJSONObject("address");
+            if (!country.equals("Select Country") && (address == null || !address.optString("country").equalsIgnoreCase(country))) continue;
+            if (!state.equals("Select State") && (address == null || !address.optString("state").equalsIgnoreCase(state))) continue;
 
             if (!query.isEmpty()) {
-                String name = user.get("firstName").toLowerCase() + " " + user.get("lastName").toLowerCase();
-                String email = user.get("email").toLowerCase();
-                String uname = user.get("userSignInUserName").toLowerCase();
-                if (!(name.contains(query.toLowerCase()) || email.contains(query.toLowerCase()) || uname.contains(query.toLowerCase())))
+                String name = user.optString("firstName") + " " + user.optString("lastName");
+                String email = user.optString("email");
+                String username = user.optString("username");
+
+                if (!(name.toLowerCase().contains(query.toLowerCase()) ||
+                        email.toLowerCase().contains(query.toLowerCase()) ||
+                        username.toLowerCase().contains(query.toLowerCase()))) {
                     continue;
+                }
             }
 
             filteredList.add(user);
         }
 
-        if (!sort.equals("Select Sort Option")) {
-            Comparator<HashMap<String, String>> comparator = null;
-            switch (sort) {
-                case "Age":
-                    comparator = Comparator.comparingInt(u -> Integer.parseInt(u.get("age")));
-                    break;
-                case "Height":
-                    comparator = Comparator.comparingDouble(u -> Double.parseDouble(u.get("height")));
-                    break;
-                case "Name":
-                    comparator = Comparator.comparing(u -> (u.get("firstName") + u.get("lastName")));
-                    break;
-                case "Role Priority":
-                    comparator = Comparator.comparingInt(u -> getRolePriority(u.get("role")));
-                    break;
-            }
-            if (comparator != null) Collections.sort(filteredList, comparator);
+        // Sorting
+        if (!sortBy.equals("Select Sort Option")) {
+            Collections.sort(filteredList, (a, b) -> {
+                switch (sortBy) {
+                    case "Age":
+                        return Integer.compare(a.optInt("age"), b.optInt("age"));
+                    case "Height":
+                        return Double.compare(a.optDouble("height"), b.optDouble("height"));
+                    case "Name":
+                        return (a.optString("firstName") + a.optString("lastName"))
+                                .compareToIgnoreCase(b.optString("firstName") + b.optString("lastName"));
+                    case "Role Priority":
+                        return getRolePriority(a.optString("role")) - getRolePriority(b.optString("role"));
+                }
+                return 0;
+            });
         }
 
         userAdapter.notifyDataSetChanged();
@@ -216,20 +245,23 @@ public class MainActivity extends AppCompatActivity {
 
     private int getRolePriority(String role) {
         switch (role.toLowerCase()) {
-            case "admin": return 1;
-            case "moderator": return 2;
-            default: return 3;
+            case "admin":
+                return 1;
+            case "moderator":
+                return 2;
+            default:
+                return 3;
         }
     }
 
     public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder> {
 
         Context context;
-        ArrayList<HashMap<String, String>> list;
+        ArrayList<JSONObject> users;
 
-        public UserAdapter(Context context, ArrayList<HashMap<String, String>> list) {
+        public UserAdapter(Context context, ArrayList<JSONObject> users) {
             this.context = context;
-            this.list = list;
+            this.users = users;
         }
 
         @Override
@@ -240,34 +272,31 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onBindViewHolder(UserViewHolder holder, int position) {
-            HashMap<String, String> user = list.get(position);
-            holder.tvFullName.setText(user.get("firstName") + " " + user.get("lastName"));
-            holder.tvPosition.setText(user.get("role"));
-            holder.tvPhone.setText(user.get("phone"));
-            holder.tvEmail.setText(user.get("email"));
+            JSONObject user = users.get(position);
 
-            String image = user.get("image");
-            if (image != null && !image.isEmpty()) {
-                Picasso.get().load(image).into(holder.profileImage);
+            String fullName = user.optString("firstName") + " " + user.optString("lastName");
+            holder.tvFullName.setText(fullName);
+            holder.tvPosition.setText(user.optString("role"));
+            holder.tvPhone.setText(user.optString("phone"));
+            holder.tvEmail.setText(user.optString("email"));
+
+            String imageUrl = user.optString("image");
+            if (!imageUrl.isEmpty()) {
+                Picasso.get().load(imageUrl).into(holder.profileImage);
             } else {
                 holder.profileImage.setImageResource(R.drawable.app_icon2);
             }
 
             holder.cardUser.setOnClickListener(v -> {
-                try {
-                    JSONObject json = new JSONObject(user);
-                    Intent intent = new Intent(context, UserDetailsActivity.class);
-                    intent.putExtra("userDataJson", json.toString());
-                    context.startActivity(intent);
-                } catch (Exception e) {
-                    Toast.makeText(context, "Error loading user details", Toast.LENGTH_SHORT).show();
-                }
+                Intent intent = new Intent(context, UserDetailsActivity.class);
+                intent.putExtra("userDataJson", user.toString());
+                context.startActivity(intent);
             });
         }
 
         @Override
         public int getItemCount() {
-            return list.size();
+            return users.size();
         }
 
         public class UserViewHolder extends RecyclerView.ViewHolder {
