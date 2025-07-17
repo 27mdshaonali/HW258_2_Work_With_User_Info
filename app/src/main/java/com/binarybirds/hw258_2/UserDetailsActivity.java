@@ -1,16 +1,21 @@
 package com.binarybirds.hw258_2;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.squareup.picasso.Picasso;
+
 import org.json.JSONObject;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
-    TextView tvOutput;
+    TextView tvOutput, cardNumberTV;
+    ImageView coverImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +23,8 @@ public class UserDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_details);
 
         tvOutput = findViewById(R.id.tvOutput);
+        cardNumberTV = findViewById(R.id.cardNumber);
+        coverImage = findViewById(R.id.coverImage);
 
         String userJsonString = getIntent().getStringExtra("userDataJson");
 
@@ -124,6 +131,8 @@ public class UserDetailsActivity extends AppCompatActivity {
                     }
                 }
 
+                String cardNumberText = "Card Number: " + cardNumber;
+
                 // Crypto (nested)
                 String coin = "", wallet = "", network = "";
                 JSONObject crypto = user.optJSONObject("crypto");
@@ -134,43 +143,42 @@ public class UserDetailsActivity extends AppCompatActivity {
                 }
 
                 // ✅ Output
-                String output = "ID: " + id +
-                        "\nName: " + firstName + " " + lastName +
-                        "\nMaiden Name: " + maidenName +
-                        "\nUsername: " + username +
-                        "\nPassword: " + password +
-                        "\nGender: " + gender +
-                        "\nAge: " + age +
-                        "\nEmail: " + email +
-                        "\nPhone: " + phone +
-                        "\nBirth Date: " + birthDate +
-                        "\nImage: " + image +
-                        "\nBlood Group: " + bloodGroup +
-                        "\nHeight: " + height +
-                        "\nWeight: " + weight +
-                        "\nEye Color: " + eyeColor +
-                        "\nHair: " + hairColor + " (" + hairType + ")" +
-                        "\nIP: " + ip +
-                        "\nMAC Address: " + macAddress +
-                        "\nUniversity: " + university +
-                        "\nEIN: " + ein +
-                        "\nSSN: " + ssn +
-                        "\nUser Agent: " + userAgent +
-                        "\nRole: " + role +
+                String output = "ID: " + id + "\nName: " + firstName + " " + lastName + "\nMaiden Name: " + maidenName + "\nUsername: " + username + "\nPassword: " + password + "\nGender: " + gender + "\nAge: " + age + "\nEmail: " + email + "\nPhone: " + phone + "\nBirth Date: " + birthDate + "\nImage: " + image + "\nBlood Group: " + bloodGroup + "\nHeight: " + height + "\nWeight: " + weight + "\nEye Color: " + eyeColor + "\nHair: " + hairColor + " (" + hairType + ")" + "\nIP: " + ip + "\nMAC Address: " + macAddress + "\nUniversity: " + university + "\nEIN: " + ein + "\nSSN: " + ssn + "\nUser Agent: " + userAgent + "\nRole: " + role +
 
-                        "\n\n📍 Address:\n" + street + ", " + city + ", " + state + " (" + stateCode + "), " + country + " - " + postalCode +
-                        "\nCoordinates: (" + lat + ", " + lng + ")" +
+                        "\n\n📍 Address:\n" + street + ", " + city + ", " + state + " (" + stateCode + "), " + country + " - " + postalCode + "\nCoordinates: (" + lat + ", " + lng + ")" +
 
-                        "\n\n🏦 Bank:\nCard: " + cardNumber + " (" + cardType + "), Exp: " + cardExpire +
-                        "\nCurrency: " + currency + ", IBAN: " + iban +
+                        "\n\n🏦 Bank:\nCard: " + cardNumber + " (" + cardType + "), Exp: " + cardExpire + "\nCurrency: " + currency + ", IBAN: " + iban +
 
-                        "\n\n🏢 Company:\n" + title + " at " + companyName +
-                        "\nDepartment: " + department +
-                        "\nAddress: " + companyStreet + ", " + companyCity + ", " + companyState + ", " + companyCountry + " - " + companyPostalCode +
+                        "\n\n🏢 Company:\n" + title + " at " + companyName + "\nDepartment: " + department + "\nAddress: " + companyStreet + ", " + companyCity + ", " + companyState + ", " + companyCountry + " - " + companyPostalCode +
 
                         "\n\n🪙 Crypto:\nCoin: " + coin + ", Wallet: " + wallet + ", Network: " + network;
 
                 tvOutput.setText(output);
+
+
+                // Step 1: Mask all but the last 2 digits
+                String maskedCardNumber = cardNumberText.replaceAll(".(?=...)", "*");
+
+                // Step 2: Set the masked card number initially
+                cardNumberTV.setText(maskedCardNumber);
+
+                // Step 3: Toggle full/masked card number on click
+                cardNumberTV.setOnClickListener(new View.OnClickListener() {
+                    private boolean isMasked = true;
+
+                    @Override
+                    public void onClick(View v) {
+                        if (isMasked) {
+                            cardNumberTV.setText(cardNumberText); // Show full number
+                        } else {
+                            cardNumberTV.setText(maskedCardNumber); // Show masked
+                        }
+                        isMasked = !isMasked;
+                    }
+                });
+
+
+                Picasso.get().load(image).into(coverImage);
 
             } catch (Exception e) {
                 e.printStackTrace();
