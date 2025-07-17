@@ -87,6 +87,8 @@ public class Sign_In_Activity extends AppCompatActivity {
 
                             String u = user.optString("username");
                             String p = user.optString("password");
+                            String gender = user.optString("gender");
+                            String profileImage = user.optString("image");
 
                             if (username.equals(u) && password.equals(p)) {
                                 isUserFound = true;
@@ -96,6 +98,8 @@ public class Sign_In_Activity extends AppCompatActivity {
                                 Intent intent = new Intent(Sign_In_Activity.this, MainActivity.class);
                                 intent.putExtra("userListJson", users.toString()); // send full array
                                 intent.putExtra("loggedUsername", username);
+                                intent.putExtra("loggedGender", gender);
+                                intent.putExtra("loggedProfileImage", profileImage);
                                 startActivity(intent);
                                 break;
                             }

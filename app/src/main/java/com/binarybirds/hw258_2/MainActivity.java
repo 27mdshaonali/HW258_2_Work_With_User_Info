@@ -1,5 +1,7 @@
 package com.binarybirds.hw258_2;
 
+import static android.view.View.GONE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
     UserAdapter userAdapter;
 
     TextView username, fullNameSet;
+    RoundedImageView userRoundedImage;
     String loggedUsername;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,10 +73,23 @@ public class MainActivity extends AppCompatActivity {
         spinnerCountry = findViewById(R.id.spinnerCountry);
         spinnerState = findViewById(R.id.spinnerState);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
+        userRoundedImage = findViewById(R.id.userRoundedImage);
 
         // Receive intent data
         String jsonArrayString = getIntent().getStringExtra("userListJson");
         loggedUsername = getIntent().getStringExtra("loggedUsername");
+        String loggedGender = getIntent().getStringExtra("loggedGender");
+        String loggedProfileImage = getIntent().getStringExtra("loggedProfileImage");
+
+        Toast.makeText(this, "Logged Gender: " + loggedGender, Toast.LENGTH_SHORT).show();
+
+        if (loggedGender != null) {
+
+            Picasso.get().load(loggedProfileImage).into(userRoundedImage);
+
+        } else {
+            userRoundedImage.setVisibility(GONE);
+        }
 
         if (jsonArrayString == null) {
             Toast.makeText(this, "Error reading user list", Toast.LENGTH_SHORT).show();
@@ -160,7 +177,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         };
 
         spinnerGender.setOnItemSelectedListener(filterListener);
@@ -171,12 +189,14 @@ public class MainActivity extends AppCompatActivity {
         spinnerSortBy.setOnItemSelectedListener(filterListener);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override public boolean onQueryTextSubmit(String query) {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
                 applyFiltersAndSort(query);
                 return true;
             }
 
-            @Override public boolean onQueryTextChange(String newText) {
+            @Override
+            public boolean onQueryTextChange(String newText) {
                 applyFiltersAndSort(newText);
                 return true;
             }
@@ -199,22 +219,25 @@ public class MainActivity extends AppCompatActivity {
         String sortBy = spinnerSortBy.getSelectedItem().toString();
 
         for (JSONObject user : userList) {
-            if (!gender.equals("Select Gender") && !user.optString("gender").equalsIgnoreCase(gender)) continue;
-            if (!role.equals("Select Role") && !user.optString("role").equalsIgnoreCase(role)) continue;
-            if (!bloodGroup.equals("Select Blood Group") && !user.optString("bloodGroup").equalsIgnoreCase(bloodGroup)) continue;
+            if (!gender.equals("Select Gender") && !user.optString("gender").equalsIgnoreCase(gender))
+                continue;
+            if (!role.equals("Select Role") && !user.optString("role").equalsIgnoreCase(role))
+                continue;
+            if (!bloodGroup.equals("Select Blood Group") && !user.optString("bloodGroup").equalsIgnoreCase(bloodGroup))
+                continue;
 
             JSONObject address = user.optJSONObject("address");
-            if (!country.equals("Select Country") && (address == null || !address.optString("country").equalsIgnoreCase(country))) continue;
-            if (!state.equals("Select State") && (address == null || !address.optString("state").equalsIgnoreCase(state))) continue;
+            if (!country.equals("Select Country") && (address == null || !address.optString("country").equalsIgnoreCase(country)))
+                continue;
+            if (!state.equals("Select State") && (address == null || !address.optString("state").equalsIgnoreCase(state)))
+                continue;
 
             if (!query.isEmpty()) {
                 String name = user.optString("firstName") + " " + user.optString("lastName");
                 String email = user.optString("email");
                 String username = user.optString("username");
 
-                if (!(name.toLowerCase().contains(query.toLowerCase()) ||
-                        email.toLowerCase().contains(query.toLowerCase()) ||
-                        username.toLowerCase().contains(query.toLowerCase()))) {
+                if (!(name.toLowerCase().contains(query.toLowerCase()) || email.toLowerCase().contains(query.toLowerCase()) || username.toLowerCase().contains(query.toLowerCase()))) {
                     continue;
                 }
             }
@@ -231,8 +254,7 @@ public class MainActivity extends AppCompatActivity {
                     case "Height":
                         return Double.compare(a.optDouble("height"), b.optDouble("height"));
                     case "Name":
-                        return (a.optString("firstName") + a.optString("lastName"))
-                                .compareToIgnoreCase(b.optString("firstName") + b.optString("lastName"));
+                        return (a.optString("firstName") + a.optString("lastName")).compareToIgnoreCase(b.optString("firstName") + b.optString("lastName"));
                     case "Role Priority":
                         return getRolePriority(a.optString("role")) - getRolePriority(b.optString("role"));
                 }

@@ -44,11 +44,14 @@
             app:layout_constraintTop_toTopOf="@id/gritting" />
 
         <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/adminRoundedImage"
-            android:layout_width="@dimen/_35sdp"
-            android:layout_height="@dimen/_35sdp"
+            android:id="@+id/userRoundedImage"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
             android:scaleType="fitXY"
-            android:src="@drawable/admin"
+            app:riv_mutate_background="true"
+            app:riv_oval="true"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:src="@drawable/male"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/gritting" />
 
