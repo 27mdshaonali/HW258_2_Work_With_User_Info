@@ -156,7 +156,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 tvOutput.setText(output);
 
 
-                // Step 1: Mask all but the last 2 digits
+                // Step 1: Mask all but the last 3 digits
                 String maskedCardNumber = cardNumberText.replaceAll(".(?=...)", "*");
 
                 // Step 2: Set the masked card number initially

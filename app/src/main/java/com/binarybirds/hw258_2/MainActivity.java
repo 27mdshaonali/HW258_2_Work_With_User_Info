@@ -23,6 +23,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
@@ -43,11 +44,10 @@ public class MainActivity extends AppCompatActivity {
     SearchView searchView;
     RecyclerView recyclerView;
     UserAdapter userAdapter;
-
+    SwipeRefreshLayout swipeRefreshLayout;
     TextView username, fullNameSet;
     RoundedImageView userRoundedImage;
-    String loggedUsername;
-
+    String loggedUsername, loggedRole;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +74,17 @@ public class MainActivity extends AppCompatActivity {
         spinnerState = findViewById(R.id.spinnerState);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
         userRoundedImage = findViewById(R.id.userRoundedImage);
+        swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         // Receive intent data
         String jsonArrayString = getIntent().getStringExtra("userListJson");
         loggedUsername = getIntent().getStringExtra("loggedUsername");
         String loggedGender = getIntent().getStringExtra("loggedGender");
         String loggedProfileImage = getIntent().getStringExtra("loggedProfileImage");
-
-        Toast.makeText(this, "Logged Gender: " + loggedGender, Toast.LENGTH_SHORT).show();
+        loggedRole = getIntent().getStringExtra("loggedRole");
 
         if (loggedGender != null) {
-
             Picasso.get().load(loggedProfileImage).into(userRoundedImage);
-
         } else {
             userRoundedImage.setVisibility(GONE);
         }
@@ -120,7 +118,6 @@ public class MainActivity extends AppCompatActivity {
             username.setText("User not found!");
         }
 
-        // Setup filter options
         ArrayList<String> genderList = new ArrayList<>();
         genderList.add("Select Gender");
         genderList.add("male");
@@ -128,9 +125,20 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> roleList = new ArrayList<>();
         roleList.add("Select Role");
-        roleList.add("admin");
-        roleList.add("moderator");
-        roleList.add("user");
+
+        // Set up role spinner based on loggedRole
+        if (loggedRole != null) {
+            if (loggedRole.equalsIgnoreCase("admin")) {
+                roleList.add("admin");
+                roleList.add("moderator");
+                roleList.add("user");
+            } else if (loggedRole.equalsIgnoreCase("moderator")) {
+                roleList.add("moderator");
+                roleList.add("user");
+            } else if (loggedRole.equalsIgnoreCase("user")) {
+                spinnerRole.setVisibility(GONE);
+            }
+        }
 
         ArrayList<String> bloodGroupList = new ArrayList<>();
         bloodGroupList.add("Select Blood Group");
@@ -162,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
         countryList.addAll(countries);
         stateList.addAll(states);
 
-        // Set spinner adapters
         spinnerGender.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genderList));
         spinnerRole.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, roleList));
         spinnerBloodGroup.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, bloodGroupList));
@@ -202,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Set adapter
         filteredList.addAll(userList);
         userAdapter = new UserAdapter(this, filteredList);
         recyclerView.setAdapter(userAdapter);
@@ -212,16 +218,23 @@ public class MainActivity extends AppCompatActivity {
         filteredList.clear();
 
         String gender = spinnerGender.getSelectedItem().toString();
-        String role = spinnerRole.getSelectedItem().toString();
+        String role = spinnerRole.getVisibility() == View.VISIBLE ? spinnerRole.getSelectedItem().toString() : "Select Role";
         String bloodGroup = spinnerBloodGroup.getSelectedItem().toString();
         String country = spinnerCountry.getSelectedItem().toString();
         String state = spinnerState.getSelectedItem().toString();
         String sortBy = spinnerSortBy.getSelectedItem().toString();
 
         for (JSONObject user : userList) {
+            String userRole = user.optString("role");
+
+            if (loggedRole.equalsIgnoreCase("moderator") && userRole.equalsIgnoreCase("admin"))
+                continue;
+            if (loggedRole.equalsIgnoreCase("user") && (userRole.equalsIgnoreCase("admin") || userRole.equalsIgnoreCase("moderator")))
+                continue;
+
             if (!gender.equals("Select Gender") && !user.optString("gender").equalsIgnoreCase(gender))
                 continue;
-            if (!role.equals("Select Role") && !user.optString("role").equalsIgnoreCase(role))
+            if (spinnerRole.getVisibility() == View.VISIBLE && !role.equals("Select Role") && !user.optString("role").equalsIgnoreCase(role))
                 continue;
             if (!bloodGroup.equals("Select Blood Group") && !user.optString("bloodGroup").equalsIgnoreCase(bloodGroup))
                 continue;
@@ -245,7 +258,6 @@ public class MainActivity extends AppCompatActivity {
             filteredList.add(user);
         }
 
-        // Sorting
         if (!sortBy.equals("Select Sort Option")) {
             Collections.sort(filteredList, (a, b) -> {
                 switch (sortBy) {
@@ -255,8 +267,10 @@ public class MainActivity extends AppCompatActivity {
                         return Double.compare(a.optDouble("height"), b.optDouble("height"));
                     case "Name":
                         return (a.optString("firstName") + a.optString("lastName")).compareToIgnoreCase(b.optString("firstName") + b.optString("lastName"));
+
                     case "Role Priority":
                         return getRolePriority(a.optString("role")) - getRolePriority(b.optString("role"));
+
                 }
                 return 0;
             });

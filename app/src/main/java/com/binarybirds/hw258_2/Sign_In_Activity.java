@@ -89,6 +89,7 @@ public class Sign_In_Activity extends AppCompatActivity {
                             String p = user.optString("password");
                             String gender = user.optString("gender");
                             String profileImage = user.optString("image");
+                            String userRole = user.optString("role");
 
                             if (username.equals(u) && password.equals(p)) {
                                 isUserFound = true;
@@ -100,6 +101,7 @@ public class Sign_In_Activity extends AppCompatActivity {
                                 intent.putExtra("loggedUsername", username);
                                 intent.putExtra("loggedGender", gender);
                                 intent.putExtra("loggedProfileImage", profileImage);
+                                intent.putExtra("loggedRole", userRole);
                                 startActivity(intent);
                                 break;
                             }

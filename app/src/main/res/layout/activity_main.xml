@@ -137,6 +137,15 @@
             </LinearLayout>
         </HorizontalScrollView>
 
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/filterScroll"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:id="@+id/swipeRefreshLayout"
+            />
+
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
