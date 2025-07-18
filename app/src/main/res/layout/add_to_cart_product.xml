@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         android:background="@color/card_background"
         app:cardCornerRadius="@dimen/_8sdp"
-        app:cardElevation="@dimen/_3sdp"
+        app:cardElevation="@dimen/_1sdp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,21 +31,17 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/productImage"
-                android:layout_width="@dimen/_70sdp"
-                android:layout_height="@dimen/_70sdp"
-                android:paddingStart="@dimen/_7sdp"
-                android:paddingTop="@dimen/_7sdp"
+                android:layout_width="@dimen/_65sdp"
+                android:layout_height="@dimen/_65sdp"
+                android:paddingStart="@dimen/_4sdp"
+                android:paddingTop="@dimen/_4sdp"
                 android:paddingEnd="0dp"
-                android:paddingBottom="@dimen/_7sdp"
+                android:paddingBottom="@dimen/_4sdp"
                 android:scaleType="fitXY"
                 android:src="@drawable/shaon"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:riv_corner_radius="@dimen/_6sdp" />
-
-
-
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

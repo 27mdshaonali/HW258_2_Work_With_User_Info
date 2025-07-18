@@ -2,8 +2,10 @@ package com.binarybirds.hw258_2;
 
 import static android.view.View.GONE;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +37,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 
+import soup.neumorphism.NeumorphImageView;
+
 public class MainActivity extends AppCompatActivity {
 
     ArrayList<JSONObject> userList = new ArrayList<>();
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     TextView username, fullNameSet;
     RoundedImageView userRoundedImage;
-    String loggedUsername, loggedRole;
+    String loggedUsername, loggedRole, loggedEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
                     String fullName = user.optString("firstName") + " " + user.optString("lastName");
                     fullNameSet.setText(fullName + "!");
                     username.setText("@" + loggedUsername);
+                    loggedEmail = user.optString("email"); // Store logged-in user's email
                     break;
                 }
             }
@@ -315,6 +320,7 @@ public class MainActivity extends AppCompatActivity {
             holder.tvPosition.setText(user.optString("role"));
             holder.tvPhone.setText(user.optString("phone"));
             holder.tvEmail.setText(user.optString("email"));
+            holder.bloodUser.setText(user.optString("bloodGroup"));
 
             String imageUrl = user.optString("image");
             if (!imageUrl.isEmpty()) {
@@ -328,6 +334,48 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("userDataJson", user.toString());
                 context.startActivity(intent);
             });
+
+            holder.tvEmail.setOnClickListener(v -> {
+                String recipientEmail = user.optString("email");
+                sendEmail(recipientEmail);
+            });
+
+            holder.call.setOnClickListener(v -> {
+                String phoneNumber = user.optString("phone");
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+                context.startActivity(intent);
+            });
+
+            holder.message.setOnClickListener(v -> {
+
+                String phoneNumber = user.optString("phone");
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("smsto:" + phoneNumber));
+                context.startActivity(intent);
+
+            });
+
+
+        }
+
+        private void sendEmail(String recipientEmail) {
+            Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+            emailIntent.setData(Uri.parse("mailto:")); // Only email apps should handle this
+
+            // Set the recipient email
+            emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{recipientEmail});
+
+            // Include the sender's email in the body
+            String emailBody = "This email is sent from: " + loggedEmail + "\n\n";
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Message from User Directory");
+            emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
+
+            try {
+                context.startActivity(Intent.createChooser(emailIntent, "Send email..."));
+            } catch (android.content.ActivityNotFoundException ex) {
+                Toast.makeText(context, "No email clients installed.", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
@@ -336,9 +384,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public class UserViewHolder extends RecyclerView.ViewHolder {
-            TextView tvFullName, tvPosition, tvPhone, tvEmail;
+            TextView tvFullName, tvPosition, tvPhone, tvEmail, bloodUser;
             RoundedImageView profileImage;
             CardView cardUser;
+            NeumorphImageView call, message;
 
             public UserViewHolder(View itemView) {
                 super(itemView);
@@ -348,6 +397,9 @@ public class MainActivity extends AppCompatActivity {
                 tvEmail = itemView.findViewById(R.id.emailUser);
                 profileImage = itemView.findViewById(R.id.imageUser);
                 cardUser = itemView.findViewById(R.id.cardUser);
+                call = itemView.findViewById(R.id.call);
+                message = itemView.findViewById(R.id.message);
+                bloodUser = itemView.findViewById(R.id.bloodUser);
             }
         }
     }
