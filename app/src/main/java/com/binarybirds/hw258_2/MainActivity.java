@@ -2,7 +2,6 @@ package com.binarybirds.hw258_2;
 
 import static android.view.View.GONE;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -353,6 +352,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("smsto:" + phoneNumber));
                 context.startActivity(intent);
+
+            });
+
+            holder.profileImage.setOnClickListener(v -> {
+
+                startActivity(new Intent(context, ModeratorUserDetailsActivity.class));
 
             });
 

@@ -1,5 +1,6 @@
 package com.binarybirds.hw258_2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -13,7 +14,6 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONObject;
 
 public class UserDetailsActivity extends AppCompatActivity {
-
     TextView tvOutput, cardNumberTV;
     ImageView coverImage;
 

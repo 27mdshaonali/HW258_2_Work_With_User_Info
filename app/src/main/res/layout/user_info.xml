@@ -39,7 +39,7 @@
                 android:paddingEnd="4dp"
                 android:paddingBottom="@dimen/_4sdp"
                 android:scaleType="fitXY"
-                android:src="@drawable/shaon"
+                android:src="@drawable/app_icon2"
                 app:layout_constraintBottom_toBottomOf="@id/emailUser"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/nameUser"
@@ -70,7 +70,7 @@
                 android:textColor="@color/primary_text"
                 android:textSize="@dimen/_14ssp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/message"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
