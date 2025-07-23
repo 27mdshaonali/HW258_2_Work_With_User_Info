@@ -471,30 +471,6 @@
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/birthDate" />
 
-                        <TextView
-                            android:id="@+id/bodyStructure"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/_10sdp"
-                            android:text="Body Steucture: "
-                            android:textColor="@color/primary_text"
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="normal"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/birthDate" />
-
-                        <TextView
-                            android:id="@+id/bodyStructureResult"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Height and Weight "
-                            android:textColor="@color/secondary_text"
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/bodyStructure"
-                            app:layout_constraintStart_toEndOf="@id/bodyStructure"
-                            app:layout_constraintTop_toTopOf="@id/bodyStructure" />
-
 
                         <TextView
                             android:id="@+id/contactInfo"
@@ -506,7 +482,7 @@
                             android:textSize="@dimen/_15ssp"
                             android:textStyle="bold"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/bodyStructure" />
+                            app:layout_constraintTop_toBottomOf="@id/birthDate" />
 
                         <TextView
                             android:id="@+id/emailInfo"
@@ -751,6 +727,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_25sdp"
+                            android:paddingBottom="@dimen/_7sdp"
                             android:text="Latitude: "
                             android:textColor="@color/primary_text"
                             android:textSize="@dimen/_14ssp"
@@ -941,6 +918,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_25sdp"
+                            android:paddingBottom="@dimen/_7sdp"
                             android:text="Location: "
                             android:textColor="@color/primary_text"
                             android:textSize="@dimen/_14ssp"
@@ -964,8 +942,8 @@
 
                 </androidx.cardview.widget.CardView>
 
-
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardFinancial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="@dimen/_4sdp"
@@ -1168,6 +1146,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
+                            android:paddingBottom="@dimen/_7sdp"
                             android:text="Network: "
                             android:textColor="@color/primary_text"
                             android:textSize="@dimen/_14ssp"
@@ -1186,6 +1165,234 @@
                             app:layout_constraintBottom_toBottomOf="@id/cryptoNetworkInfo"
                             app:layout_constraintStart_toEndOf="@id/cryptoNetworkInfo"
                             app:layout_constraintTop_toTopOf="@id/cryptoNetworkInfo" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardAdditional"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_4sdp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardFinancial">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp">
+
+
+                        <TextView
+                            android:id="@+id/securityAndTechnical"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="🔐 Security and Technical"
+                            android:textAlignment="center"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_17ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/credentialsAndIDsInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Credentials and IDs:"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_15ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/securityAndTechnical" />
+
+                        <TextView
+                            android:id="@+id/credentialsPasswordInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Password: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/credentialsAndIDsInfo" />
+
+                        <TextView
+                            android:id="@+id/credentialsPasswordInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="pass"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/credentialsPasswordInfo"
+                            app:layout_constraintStart_toEndOf="@id/credentialsPasswordInfo"
+                            app:layout_constraintTop_toTopOf="@id/credentialsPasswordInfo" />
+
+                        <TextView
+                            android:id="@+id/credentialsEINInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="EIN: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/credentialsPasswordInfo" />
+
+                        <TextView
+                            android:id="@+id/credentialsEINInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ein"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/credentialsEINInfo"
+                            app:layout_constraintStart_toEndOf="@id/credentialsEINInfo"
+                            app:layout_constraintTop_toTopOf="@id/credentialsEINInfo" />
+
+                        <TextView
+                            android:id="@+id/credentialsSSNInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="SSN: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/credentialsEINInfo" />
+
+                        <TextView
+                            android:id="@+id/credentialsSSNInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ssn"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/credentialsSSNInfo"
+                            app:layout_constraintStart_toEndOf="@id/credentialsSSNInfo"
+                            app:layout_constraintTop_toTopOf="@id/credentialsSSNInfo" />
+
+                        <TextView
+                            android:id="@+id/credentialsRoleInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Role: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/credentialsSSNInfo" />
+
+                        <TextView
+                            android:id="@+id/credentialsRoleInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="admin"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/credentialsRoleInfo"
+                            app:layout_constraintStart_toEndOf="@id/credentialsRoleInfo"
+                            app:layout_constraintTop_toTopOf="@id/credentialsRoleInfo" />
+
+
+                        <TextView
+                            android:id="@+id/sessionInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Session Info:"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_15ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/credentialsRoleInfo" />
+
+                        <TextView
+                            android:id="@+id/iPInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="IP: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/sessionInfo" />
+
+                        <TextView
+                            android:id="@+id/iPInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="192.168"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/iPInfo"
+                            app:layout_constraintStart_toEndOf="@id/iPInfo"
+                            app:layout_constraintTop_toTopOf="@id/iPInfo" />
+
+                        <TextView
+                            android:id="@+id/mACAddressInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="MAC Address: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/iPInfo" />
+
+                        <TextView
+                            android:id="@+id/mACAddressInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ais2d44fg4"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/mACAddressInfo"
+                            app:layout_constraintStart_toEndOf="@id/mACAddressInfo"
+                            app:layout_constraintTop_toTopOf="@id/mACAddressInfo" />
+
+                        <TextView
+                            android:id="@+id/userAgentInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="User Agent: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/mACAddressInfo" />
+
+                        <TextView
+                            android:id="@+id/userAgentInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/_10sdp"
+                            android:text="ais2d44fg4"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/userAgentInfo"
+                            app:layout_constraintStart_toEndOf="@id/userAgentInfo"
+                            app:layout_constraintTop_toTopOf="@id/userAgentInfo" />
+
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
