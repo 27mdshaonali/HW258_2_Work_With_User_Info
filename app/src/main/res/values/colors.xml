@@ -8,6 +8,7 @@
 
     <!-- Product Card -->
     <color name="card_background">#FFF5F5F5</color> <!-- Light Gray -->
+    <color name="card_background2">#FFF5F5F5</color> <!-- Light Gray -->
     <color name="original_price">#8A000000</color> <!-- Gray -->
     <color name="discounted_price">#4CAF50</color> <!-- Green -->
     <color name="button_background">#FF4081</color> <!-- Pink -->
