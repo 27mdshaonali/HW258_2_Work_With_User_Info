@@ -1170,16 +1170,35 @@
 
                 </androidx.cardview.widget.CardView>
 
+
+                <TextView
+                    android:id="@+id/additionalInfoContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:text="Additional Info"
+                    android:textAlignment="center"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/_17ssp"
+                    android:paddingBottom="@dimen/_20sdp"
+                    android:textStyle="italic"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardFinancial" />
+
+
                 <androidx.cardview.widget.CardView
+                    android:visibility="visible"
                     android:id="@+id/cardAdditional"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="@dimen/_4sdp"
                     app:cardUseCompatPadding="true"
+                    android:paddingBottom="@dimen/_10sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cardFinancial">
+                    app:layout_constraintTop_toBottomOf="@id/additionalInfoContainer">
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -1385,13 +1404,29 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingBottom="@dimen/_10sdp"
-                            android:text="ais2d44fg4"
+                            android:text="Linux"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
                             app:layout_constraintBottom_toBottomOf="@id/userAgentInfo"
                             app:layout_constraintStart_toEndOf="@id/userAgentInfo"
                             app:layout_constraintTop_toTopOf="@id/userAgentInfo" />
+
+
+                        <TextView
+                            android:id="@+id/showLess"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:layout_marginBottom="@dimen/_10sdp"
+                            android:padding="@dimen/_5sdp"
+                            android:text="Show Less"
+                            android:textAlignment="center"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="italic"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/userAgentInfo" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
