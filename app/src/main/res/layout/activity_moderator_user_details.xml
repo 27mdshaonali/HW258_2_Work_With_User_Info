@@ -258,7 +258,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="@dimen/_10sdp"
-                            android:layout_marginTop="@dimen/_5sdp"
                             android:text="First Name: "
                             android:textColor="@color/primary_text"
                             android:textSize="@dimen/_14ssp"
@@ -801,6 +800,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/cardEmployment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="@dimen/_4sdp"
@@ -959,6 +959,233 @@
                             app:layout_constraintBottom_toBottomOf="@id/companyLocation"
                             app:layout_constraintStart_toEndOf="@id/companyLocation"
                             app:layout_constraintTop_toTopOf="@id/companyLocation" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/_4sdp"
+                    app:cardElevation="@dimen/_4sdp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/cardEmployment">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/_10sdp">
+
+                        <TextView
+                            android:id="@+id/financialInfo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="💳 Financial"
+                            android:textAlignment="center"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_17ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/bankAccountInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Bank Account:"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_15ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/financialInfo" />
+
+                        <TextView
+                            android:id="@+id/cardNumberInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Card Number: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/bankAccountInfo" />
+
+                        <TextView
+                            android:id="@+id/cardNumberInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1234 5678 7890 2345"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/cardNumberInfo"
+                            app:layout_constraintStart_toEndOf="@id/cardNumberInfo"
+                            app:layout_constraintTop_toTopOf="@id/cardNumberInfo" />
+
+                        <TextView
+                            android:id="@+id/bankCurrencyInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Currency: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cardNumberInfo" />
+
+                        <TextView
+                            android:id="@+id/bankCurrencyInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="USD"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/bankCurrencyInfo"
+                            app:layout_constraintStart_toEndOf="@id/bankCurrencyInfo"
+                            app:layout_constraintTop_toTopOf="@id/bankCurrencyInfo" />
+
+                        <TextView
+                            android:id="@+id/cardExpiresInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="04/29"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/bankCurrencyInfo"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/bankCurrencyInfo" />
+
+                        <TextView
+                            android:id="@+id/cardExpiresInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Expires: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/cardExpiresInfoResult"
+                            app:layout_constraintEnd_toStartOf="@id/cardExpiresInfoResult"
+                            app:layout_constraintTop_toTopOf="@id/cardExpiresInfoResult" />
+
+
+                        <TextView
+                            android:id="@+id/cardIBANInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="IBAN: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/bankCurrencyInfo" />
+
+                        <TextView
+                            android:id="@+id/cardIBANInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="83IDaaaaaaaa"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/cardIBANInfo"
+                            app:layout_constraintStart_toEndOf="@id/cardIBANInfo"
+                            app:layout_constraintTop_toTopOf="@id/cardIBANInfo" />
+
+                        <TextView
+                            android:id="@+id/cryptoWalletsInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/_10sdp"
+                            android:text="Crypto Wallets ₿:"
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_15ssp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cardIBANInfoResult" />
+
+
+                        <TextView
+                            android:id="@+id/coinInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Coin: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cryptoWalletsInfo" />
+
+                        <TextView
+                            android:id="@+id/coinInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bitcoin"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/coinInfo"
+                            app:layout_constraintStart_toEndOf="@id/coinInfo"
+                            app:layout_constraintTop_toTopOf="@id/coinInfo" />
+
+                        <TextView
+                            android:id="@+id/cryptoWalletInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Wallet: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/coinInfo" />
+
+                        <TextView
+                            android:id="@+id/cryptoWalletInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="y2usgasdui4k43"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/cryptoWalletInfo"
+                            app:layout_constraintStart_toEndOf="@id/cryptoWalletInfo"
+                            app:layout_constraintTop_toTopOf="@id/cryptoWalletInfo" />
+
+                        <TextView
+                            android:id="@+id/cryptoNetworkInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_10sdp"
+                            android:text="Network: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/cryptoWalletInfo" />
+
+                        <TextView
+                            android:id="@+id/cryptoNetworkInfoResult"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ethereum"
+                            android:textColor="@color/secondary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintBottom_toBottomOf="@id/cryptoNetworkInfo"
+                            app:layout_constraintStart_toEndOf="@id/cryptoNetworkInfo"
+                            app:layout_constraintTop_toTopOf="@id/cryptoNetworkInfo" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
