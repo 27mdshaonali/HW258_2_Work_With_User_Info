@@ -1,30 +1,88 @@
 package com.binarybirds.hw258_2;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
 public class UserDetailsActivity extends AppCompatActivity {
-    TextView tvOutput, cardNumberTV;
+    TextView tvOutput, fullUserName, userName, userBloodGroup, userCompanyName, userPosition, userNumber, userEmail, firstNameResult, lastNameResult, maidenNameResult, ageResult, genderResult, emailResult, phoneResult, birthDateResult, bloodGroupResult, heightResult, weightResult, eyeColorResult, hairColorResult, ipResult, macAddressResult, userAgentResult, universityNameResult, credentialsPasswordInfoResult, einResult, ssnResult, roleResult, companyNameResult, departmentResult, titleResult, streetResult, streetInfoResult,
+            locationInfoResult, companyStreetResult, companyLocationResult, latResult, lngResult, cardNumberInfoResult, coinResult, walletResult, networkResult, cardTypeResult, cardExpireResult, currencyResult, cryptoWalletInfoResult, cardIBANInfoResult, phoneInfoResult;
+    RoundedImageView imageCall, imageMessage, imageWhatsapp, imageEmail;
     ImageView coverImage;
+
+
+    //========================== Masking Methods ====================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_details);
 
-        tvOutput = findViewById(R.id.tvOutput);
-        cardNumberTV = findViewById(R.id.cardNumber);
+        //tvOutput = findViewById(R.id.tvOutput);
+        cardNumberInfoResult = findViewById(R.id.cardNumberInfoResult);
         coverImage = findViewById(R.id.coverImage);
+        credentialsPasswordInfoResult = findViewById(R.id.credentialsPasswordInfoResult);
+        cryptoWalletInfoResult = findViewById(R.id.cryptoWalletInfoResult);
+        cardIBANInfoResult = findViewById(R.id.cardIBANInfoResult);
+        phoneInfoResult = findViewById(R.id.phoneInfoResult);
+        userNumber = findViewById(R.id.userNumber);
+
+        fullUserName = findViewById(R.id.fullUserName);
+        userName = findViewById(R.id.userName);
+        userBloodGroup = findViewById(R.id.userBloodGroup);
+        userCompanyName = findViewById(R.id.userCompanyName);
+        userPosition = findViewById(R.id.userPosition);
+        userEmail = findViewById(R.id.userEmail);
+        firstNameResult = findViewById(R.id.firstNameResult);
+        lastNameResult = findViewById(R.id.lastName);
+        maidenNameResult = findViewById(R.id.maidenName);
+        ageResult = findViewById(R.id.age);
+        genderResult = findViewById(R.id.gender);
+        emailResult = findViewById(R.id.emailInfoResult);
+        birthDateResult = findViewById(R.id.birthDate);
+        bloodGroupResult = findViewById(R.id.bloodResult);
+        heightResult = findViewById(R.id.heightInfoResult);
+        weightResult = findViewById(R.id.weightInfoResult);
+        eyeColorResult = findViewById(R.id.eyeColorResult);
+        hairColorResult = findViewById(R.id.hairInfoResult);
+        ipResult = findViewById(R.id.iPInfoResult);
+        macAddressResult = findViewById(R.id.mACAddressInfoResult);
+        userAgentResult = findViewById(R.id.userAgentInfoResult);
+        universityNameResult = findViewById(R.id.universityNameResult);
+        einResult = findViewById(R.id.credentialsEINInfoResult);
+        ssnResult = findViewById(R.id.credentialsSSNInfoResult);
+        roleResult = findViewById(R.id.credentialsRoleInfoResult);
+        companyNameResult = findViewById(R.id.companyNameResult);
+        departmentResult = findViewById(R.id.companyDepartmentResult);
+        titleResult = findViewById(R.id.companyTitleResult);
+        streetInfoResult = findViewById(R.id.streetInfoResult);
+        locationInfoResult = findViewById(R.id.locationInfoResult);
+        latResult = findViewById(R.id.latitudeInfoResult);
+        lngResult = findViewById(R.id.longitudeInfoResult);
+
+        companyStreetResult = findViewById(R.id.companyStreetResult);
+        companyLocationResult = findViewById(R.id.companyLocationResult);
+
+        cardTypeResult = findViewById(R.id.cardTypeInfoResult);
+        cardExpireResult = findViewById(R.id.cardExpiresInfoResult);
+        currencyResult = findViewById(R.id.bankCurrencyInfoResult);
+
+        coinResult = findViewById(R.id.coinInfoResult);
+        networkResult = findViewById(R.id.cryptoNetworkInfoResult);
+
+        imageCall = findViewById(R.id.imageCall);
+        imageMessage = findViewById(R.id.imageMessage);
+        imageWhatsapp = findViewById(R.id.imageWhatsapp);
+        imageEmail = findViewById(R.id.imageEmail);
+
 
         String userJsonString = getIntent().getStringExtra("userDataJson");
 
@@ -131,7 +189,9 @@ public class UserDetailsActivity extends AppCompatActivity {
                     }
                 }
 
-                String cardNumberText = "Card Number: " + cardNumber;
+                String cardNumberText = cardNumber;
+                String ibanNumberText = iban;
+                String passwordText = user.optString("password");
 
                 // Crypto (nested)
                 String coin = "", wallet = "", network = "";
@@ -142,6 +202,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                     network = crypto.optString("network");
                 }
 
+                /*
                 // ✅ Output
                 String output = "ID: " + id + "\nName: " + firstName + " " + lastName + "\nMaiden Name: " + maidenName + "\nUsername: " + username + "\nPassword: " + password + "\nGender: " + gender + "\nAge: " + age + "\nEmail: " + email + "\nPhone: " + phone + "\nBirth Date: " + birthDate + "\nImage: " + image + "\nBlood Group: " + bloodGroup + "\nHeight: " + height + "\nWeight: " + weight + "\nEye Color: " + eyeColor + "\nHair: " + hairColor + " (" + hairType + ")" + "\nIP: " + ip + "\nMAC Address: " + macAddress + "\nUniversity: " + university + "\nEIN: " + ein + "\nSSN: " + ssn + "\nUser Agent: " + userAgent + "\nRole: " + role +
 
@@ -155,37 +216,108 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                 tvOutput.setText(output);
 
+                 */
 
-                // Step 1: Mask all but the last 3 digits
-                String maskedCardNumber = cardNumberText.replaceAll(".(?=...)", "*");
 
-                // Step 2: Set the masked card number initially
-                cardNumberTV.setText(maskedCardNumber);
 
-                // Step 3: Toggle full/masked card number on click
-                cardNumberTV.setOnClickListener(new View.OnClickListener() {
-                    private boolean isMasked = true;
+                //================================= Setting Data Starts ====================================
 
-                    @Override
-                    public void onClick(View v) {
-                        if (isMasked) {
-                            cardNumberTV.setText(cardNumberText); // Show full number
-                        } else {
-                            cardNumberTV.setText(maskedCardNumber); // Show masked
-                        }
-                        isMasked = !isMasked;
-                    }
-                });
+                fullUserName.setText(firstName + " " + lastName);
+                userName.setText("@"+username);
+                userBloodGroup.setText(bloodGroup);
+                userCompanyName.setText(companyName);
+                userPosition.setText(title);
+                userEmail.setText(email);
+                userNumber.setText(phone);
+
+                firstNameResult.setText(firstName);
+                lastNameResult.setText(lastName);
+
+                if (maidenNameResult.length() > 0) {
+                    maidenNameResult.setText(maidenName);
+                } else {
+                    maidenNameResult.setText("N/A");
+                }
+
+                universityNameResult.setText(university);
+                genderResult.setText(gender);
+                bloodGroupResult.setText(bloodGroup);
+                birthDateResult.setText(birthDate);
+                ageResult.setText(age);
+
+                emailResult.setText(email);
+                phoneResult.setText(phone);
+
+                heightResult.setText(height);
+                weightResult.setText(weight);
+                eyeColorResult.setText(eyeColor);
+                hairColorResult.setText(hairColor+"("+hairType+")");
+
+                streetInfoResult.setText(street);
+                locationInfoResult.setText(street+", "+city+", "+state+" ("+stateCode+"), "+country+" - "+postalCode);
+                latResult.setText(String.valueOf(lat));
+                lngResult.setText(String.valueOf(lng));
+
+
+                companyNameResult.setText(companyName);
+                departmentResult.setText(department);
+                titleResult.setText(title);
+                companyStreetResult.setText(companyStreet);
+                companyLocationResult.setText(companyStreet+", "+companyCity+", "+companyState + " "+companyCountry+" - "+companyPostalCode);
+
+                cardTypeResult.setText(cardType);
+                cardExpireResult.setText(cardExpire);
+                currencyResult.setText(currency);
+
+                coinResult.setText(coin);
+                walletResult.setText(wallet);
+                networkResult.setText(network);
+
+
+                ipResult.setText(ip);
+                macAddressResult.setText(macAddress);
+                userAgentResult.setText(userAgent);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                //================================= Setting Data Ends ====================================
+
+
+
+                //=============================== Masking Area Starts ====================================
+
+
+                MaskingUtils.applyMaskToggle(cardNumberInfoResult, cardNumberText, 3, 3);
+                MaskingUtils.applyMaskToggle(cardIBANInfoResult, ibanNumberText, 3, 3);
+                MaskingUtils.applyMaskToggle(credentialsPasswordInfoResult, passwordText, 0, 0);
+
+                //=============================== Masking Area Ends ====================================
 
 
                 Picasso.get().load(image).into(coverImage);
 
             } catch (Exception e) {
                 e.printStackTrace();
-                tvOutput.setText("Error parsing user data.");
+                Toast.makeText(this, "Error parsing JSON data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         } else {
-            tvOutput.setText("No user data received.");
+            Toast.makeText(this, "No user data available", Toast.LENGTH_SHORT).show();
         }
+
+
     }
 }
