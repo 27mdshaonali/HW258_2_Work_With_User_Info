@@ -230,53 +230,8 @@ public class UserDetailsActivity extends AppCompatActivity {
                 userEmail.setText(email);
                 userNumber.setText(phone);
 
-                firstNameResult.setText(firstName);
-                lastNameResult.setText(lastName);
-
-                if (maidenNameResult.length() > 0) {
-                    maidenNameResult.setText(maidenName);
-                } else {
-                    maidenNameResult.setText("N/A");
-                }
-
-                universityNameResult.setText(university);
-                genderResult.setText(gender);
-                bloodGroupResult.setText(bloodGroup);
-                birthDateResult.setText(birthDate);
-                ageResult.setText(age);
-
-                emailResult.setText(email);
-                phoneResult.setText(phone);
-
-                heightResult.setText(height);
-                weightResult.setText(weight);
-                eyeColorResult.setText(eyeColor);
-                hairColorResult.setText(hairColor+"("+hairType+")");
-
-                streetInfoResult.setText(street);
-                locationInfoResult.setText(street+", "+city+", "+state+" ("+stateCode+"), "+country+" - "+postalCode);
-                latResult.setText(String.valueOf(lat));
-                lngResult.setText(String.valueOf(lng));
 
 
-                companyNameResult.setText(companyName);
-                departmentResult.setText(department);
-                titleResult.setText(title);
-                companyStreetResult.setText(companyStreet);
-                companyLocationResult.setText(companyStreet+", "+companyCity+", "+companyState + " "+companyCountry+" - "+companyPostalCode);
-
-                cardTypeResult.setText(cardType);
-                cardExpireResult.setText(cardExpire);
-                currencyResult.setText(currency);
-
-                coinResult.setText(coin);
-                walletResult.setText(wallet);
-                networkResult.setText(network);
-
-
-                ipResult.setText(ip);
-                macAddressResult.setText(macAddress);
-                userAgentResult.setText(userAgent);
 
 
 
