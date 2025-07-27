@@ -52,7 +52,6 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:textIsSelectable="true"
                     android:id="@+id/userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -60,6 +59,7 @@
                     android:padding="@dimen/_1sdp"
                     android:text="username"
                     android:textColor="@color/secondary_text"
+                    android:textIsSelectable="true"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
@@ -141,21 +141,40 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/userNumber" />
 
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/quickShare"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@color/btn_secondary"
+            android:padding="@dimen/_7sdp"
+            android:text="Quick Share"
+            android:textAlignment="center"
+            android:textColor="@color/btn_text"
+            android:textSize="@dimen/_13ssp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/coverLayout" />
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
             app:cardBackgroundColor="@color/card_background"
             app:cardCornerRadius="@dimen/_4sdp"
             app:cardElevation="@dimen/_4sdp"
             app:cardUseCompatPadding="true"
-            app:layout_constraintTop_toBottomOf="@id/coverLayout">
+            app:layout_constraintTop_toBottomOf="@id/quickShare">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -351,12 +370,12 @@
                             android:id="@+id/universityNameResult"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:maxLines="2"
                             android:text="MIT"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:ellipsize="none"
-                            android:maxLines="2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/universityName"
                             app:layout_constraintTop_toTopOf="@id/universityName" />
@@ -403,7 +422,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="B+"
-                            android:textColor="@color/secondary_text"
+                            android:textColor="@color/blood_color"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
                             app:layout_constraintBottom_toBottomOf="@id/gender"
@@ -488,17 +507,27 @@
                             android:id="@+id/emailInfoResult"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:maxLines="2"
                             android:padding="@dimen/_2sdp"
                             android:scrollHorizontally="true"
                             android:text="mdshaonislam912@gmail.com"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:ellipsize="none"
-                            android:maxLines="2"
-                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/copyEmail"
                             app:layout_constraintStart_toEndOf="@id/emailInfo"
                             app:layout_constraintTop_toTopOf="@id/emailInfo" />
+
+                        <ImageView
+                            android:id="@+id/copyEmail"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:src="@drawable/copy_24"
+                            app:layout_constraintBottom_toBottomOf="@id/emailInfoResult"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/emailInfoResult"
+                            app:tint="@color/colorPrimaryVariant" />
 
                         <TextView
                             android:id="@+id/phoneInfo"
@@ -513,9 +542,10 @@
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/emailInfoResult" />
 
+
                         <TextView
                             android:id="@+id/phoneInfoResult"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_2sdp"
                             android:text="+8801796470921"
@@ -523,8 +553,19 @@
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
                             app:layout_constraintBottom_toBottomOf="@id/phoneInfo"
+                            app:layout_constraintEnd_toStartOf="@id/copyPhone"
                             app:layout_constraintStart_toEndOf="@id/phoneInfo"
                             app:layout_constraintTop_toTopOf="@id/phoneInfo" />
+
+                        <ImageView
+                            android:id="@+id/copyPhone"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:src="@drawable/copy_24"
+                            app:layout_constraintBottom_toBottomOf="@id/phoneInfoResult"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/phoneInfoResult"
+                            app:tint="@color/colorPrimaryVariant" />
 
                         <TextView
                             android:id="@+id/physicalAttributesInfo"
@@ -691,12 +732,12 @@
                             android:id="@+id/locationInfoResult"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:maxLines="4"
                             android:text="Kalashnagar, Rajshahi"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:ellipsize="none"
-                            android:maxLines="4"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/locationInfo"
                             app:layout_constraintTop_toTopOf="@id/locationInfo" />
@@ -752,11 +793,11 @@
                             android:id="@+id/longitudeInfoResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:text="Long"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:paddingBottom="@dimen/_10sdp"
                             app:layout_constraintStart_toEndOf="@id/longitudeInfo"
                             app:layout_constraintTop_toTopOf="@id/longitudeInfo" />
 
@@ -915,15 +956,15 @@
                             android:id="@+id/companyLocationResult"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:maxLines="2"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:text="Bangladesh"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:ellipsize="none"
-                            android:maxLines="2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/companyLocation"
-                            android:paddingBottom="@dimen/_10sdp"
                             app:layout_constraintTop_toTopOf="@id/companyLocation" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -1139,12 +1180,12 @@
                             android:id="@+id/cryptoWalletInfoResult"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:maxLines="2"
                             android:text="y2usgasdui4k43"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:ellipsize="none"
-                            android:maxLines="2"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/cryptoWalletInfo"
                             app:layout_constraintTop_toTopOf="@id/cryptoWalletInfo" />
@@ -1165,11 +1206,11 @@
                             android:id="@+id/cryptoNetworkInfoResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:paddingBottom="@dimen/_10sdp"
                             android:text="Ethereum"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:paddingBottom="@dimen/_10sdp"
                             app:layout_constraintStart_toEndOf="@id/cryptoNetworkInfo"
                             app:layout_constraintTop_toTopOf="@id/cryptoNetworkInfo" />
 
@@ -1198,9 +1239,9 @@
                     android:id="@+id/cardAdditional"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardBackgroundColor="@color/card_background"
                     android:paddingBottom="@dimen/_10sdp"
                     android:visibility="visible"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="@dimen/_4sdp"
                     app:cardUseCompatPadding="true"
@@ -1405,12 +1446,12 @@
                             android:id="@+id/userAgentInfoResult"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:ellipsize="none"
+                            android:maxLines="5"
                             android:text="Linux"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            android:ellipsize="none"
-                            android:maxLines="5"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/userAgentInfo"
                             app:layout_constraintTop_toTopOf="@id/userAgentInfo" />

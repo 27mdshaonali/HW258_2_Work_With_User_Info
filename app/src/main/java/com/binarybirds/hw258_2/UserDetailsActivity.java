@@ -3,6 +3,9 @@ package com.binarybirds.hw258_2;
 import static android.view.View.GONE;
 
 import android.Manifest;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -33,14 +36,14 @@ import java.util.TimeZone;
 public class UserDetailsActivity extends AppCompatActivity {
     RoundedImageView imageCall, imageMessage, imageWhatsapp, imageEmail;
     ImageView ppImage;
-
     TextView fullUserName, userName, userBloodGroup, userCompanyName, userPosition, userEmail, userNumber;
     TextView firstNameResult, LastNameResult, maidenNameResult, universityNameResult, genderResult, bloodResult, birthDateResult, ageResult, emailInfoResult, phoneInfoResult;
+    ImageView copyEmail, copyPhone;
     TextView heightInfoResult, weightInfoResult, eyeColorResult, hairInfoResult;
     TextView streetInfoResult, locationInfoResult, latitudeInfoResult, longitudeInfoResult;
     TextView companyNameResult, companyTitleResult, companyDepartmentResult, companyStreetResult, companyLocationResult;
     TextView cardNumberInfoResult, cardTypeInfoResult, bankCurrencyInfoResult, cardExpiresInfoResult, cardIBANInfoResult, coinInfoResult, cryptoWalletInfoResult, cryptoNetworkInfoResult;
-    TextView additionalInfoContainer, showLess;
+    TextView quickShare,additionalInfoContainer, showLess;
     TextView credentialsPasswordInfoResult, credentialsEINInfoResult, credentialsSSNInfoResult, credentialsRoleInfoResult, iPInfoResult, mACAddressInfoResult, userAgentInfoResult;
     String loggedEmails;
     CardView cardAdditional;
@@ -70,6 +73,7 @@ public class UserDetailsActivity extends AppCompatActivity {
 
         //============================ Additional Info Visibility ====================================
 
+        quickShare = findViewById(R.id.quickShare);
         additionalInfoContainer = findViewById(R.id.additionalInfoContainer);
         showLess = findViewById(R.id.showLess);
         cardAdditional = findViewById(R.id.cardAdditional);
@@ -135,6 +139,8 @@ public class UserDetailsActivity extends AppCompatActivity {
         userCompanyName = findViewById(R.id.userCompanyName);
         userPosition = findViewById(R.id.userPosition);
         userEmail = findViewById(R.id.userEmail);
+        copyEmail = findViewById(R.id.copyEmail);
+        copyPhone = findViewById(R.id.copyPhone);
         userNumber = findViewById(R.id.userNumber);
 
 
@@ -313,6 +319,31 @@ public class UserDetailsActivity extends AppCompatActivity {
                 emailInfoResult.setText(email);
                 phoneInfoResult.setText(phone);
 
+                copyEmail.setOnClickListener(v -> {
+
+                    String textToCopyEmail = email;
+
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Copied Text", textToCopyEmail);
+                    clipboard.setPrimaryClip(clip);
+
+                    Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+
+                });
+
+                copyPhone.setOnClickListener(v -> {
+
+                    String textToCopyPhone = phone;
+
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Copied Text", textToCopyPhone);
+                    clipboard.setPrimaryClip(clip);
+
+                    Toast.makeText(this, "Copied to clipboard", Toast.LENGTH_SHORT).show();
+
+                });
+
+
                 imageCall.setOnClickListener(v -> {
 
                     String callNumber = phone;
@@ -443,7 +474,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 String titles = title;
 
 
-                ppImage.setOnClickListener(v -> {
+                quickShare.setOnClickListener(v -> {
                     QRUtils.showQRCodeDialog(
 
                             UserDetailsActivity.this, ""+firstName+" "+lastName, "@"+username, ""+titles, ""+phone, ""+email);
