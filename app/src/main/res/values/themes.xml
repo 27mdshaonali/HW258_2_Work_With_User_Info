@@ -6,7 +6,13 @@
         <item name="colorPrimary">@color/primary</item>"
         <item name="android:statusBarColor" tools:targetApi="VANILLA_ICE_CREAM">@color/primary
         </item>
+
+<!--        <item name="windowNoTitle">true</item>-->
+<!--        <item name="windowActionBar">false</item>-->
+<!--        <item name="android:windowFullscreen">true</item>-->
+
     </style>
 
     <style name="Theme.HW258_2" parent="Base.Theme.HW258_2" />
+
 </resources>

@@ -47,13 +47,13 @@
             android:id="@+id/userRoundedImage"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
-            android:scaleType="fitXY"
-            app:riv_mutate_background="true"
-            app:riv_oval="true"
             android:layout_marginRight="@dimen/_5sdp"
+            android:scaleType="fitXY"
             android:src="@drawable/male"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/gritting" />
+            app:layout_constraintTop_toTopOf="@id/gritting"
+            app:riv_mutate_background="true"
+            app:riv_oval="true" />
 
         <!-- Username -->
         <TextView
@@ -138,13 +138,12 @@
         </HorizontalScrollView>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/filterScroll"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/swipeRefreshLayout"
-            />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/filterScroll" />
 
         <!-- RecyclerView -->
         <androidx.recyclerview.widget.RecyclerView
