@@ -35,7 +35,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@color/card_background">
 
                 <TextView
                     android:id="@+id/fullUserName"
@@ -55,16 +56,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:padding="@dimen/_1sdp"
                     android:text="username"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
-                    android:padding="@dimen/_1sdp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/fullUserName" />
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/coverImage"
+                    android:id="@+id/ppImage"
                     android:layout_width="@dimen/_80sdp"
                     android:layout_height="@dimen/_90sdp"
                     android:layout_marginEnd="@dimen/_15sdp"
@@ -78,15 +79,13 @@
                     android:id="@+id/userBloodGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_4sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:text="Blood Group"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/_18ssp"
+                    android:textColor="@color/blood_color"
+                    android:textSize="@dimen/_22ssp"
                     android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="@id/coverImage"
-                    app:layout_constraintStart_toStartOf="@id/coverImage"
-                    app:layout_constraintTop_toBottomOf="@id/coverImage" />
+                    app:layout_constraintEnd_toEndOf="@id/ppImage"
+                    app:layout_constraintTop_toBottomOf="@id/ppImage" />
 
                 <TextView
                     android:id="@+id/userCompanyName"
@@ -118,8 +117,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:text="Number"
                     android:padding="@dimen/_1sdp"
+                    android:text="Number"
                     android:textColor="@color/secondary_text"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
@@ -131,6 +130,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_2sdp"
+                    android:maxLines="2"
                     android:paddingBottom="@dimen/_10sdp"
                     android:text="Email"
                     android:textColor="@color/secondary_text"
@@ -149,6 +150,7 @@
             android:id="@+id/cardContact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:cardBackgroundColor="@color/card_background"
             app:cardCornerRadius="@dimen/_4sdp"
             app:cardElevation="@dimen/_4sdp"
             app:cardUseCompatPadding="true"
@@ -161,8 +163,9 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageCall"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_3sdp"
                     android:src="@drawable/call_48"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/imageMessage"
@@ -172,8 +175,9 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageMessage"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_3sdp"
                     android:src="@drawable/message_48"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/imageWhatsapp"
@@ -182,8 +186,9 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageWhatsapp"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_3sdp"
                     android:src="@drawable/whatsapp_48"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/imageEmail"
@@ -192,8 +197,9 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageEmail"
-                    android:layout_width="@dimen/_30sdp"
-                    android:layout_height="@dimen/_30sdp"
+                    android:layout_width="@dimen/_35sdp"
+                    android:layout_height="@dimen/_35sdp"
+                    android:padding="@dimen/_3sdp"
                     android:src="@drawable/email_48"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -222,6 +228,7 @@
                     android:id="@+id/cardPersonalInfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="@dimen/_4sdp"
                     app:cardUseCompatPadding="true"
@@ -278,7 +285,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/firstName"
                             app:layout_constraintStart_toEndOf="@id/firstName"
                             app:layout_constraintTop_toTopOf="@id/firstName" />
 
@@ -302,7 +308,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/lastName"
                             app:layout_constraintStart_toEndOf="@id/lastName"
                             app:layout_constraintTop_toTopOf="@id/lastName" />
 
@@ -326,7 +331,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/maidenName"
                             app:layout_constraintStart_toEndOf="@id/maidenName"
                             app:layout_constraintTop_toTopOf="@id/maidenName" />
 
@@ -344,13 +348,15 @@
 
                         <TextView
                             android:id="@+id/universityNameResult"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="MIT"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/universityName"
+                            android:ellipsize="none"
+                            android:maxLines="2"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/universityName"
                             app:layout_constraintTop_toTopOf="@id/universityName" />
 
@@ -364,7 +370,7 @@
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/universityName" />
+                            app:layout_constraintTop_toBottomOf="@id/universityNameResult" />
 
                         <TextView
                             android:id="@+id/genderResult"
@@ -479,14 +485,17 @@
 
                         <TextView
                             android:id="@+id/emailInfoResult"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:padding="@dimen/_2sdp"
+                            android:scrollHorizontally="true"
                             android:text="mdshaonislam912@gmail.com"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/emailInfo"
+                            android:ellipsize="none"
+                            android:maxLines="2"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/emailInfo"
                             app:layout_constraintTop_toTopOf="@id/emailInfo" />
 
@@ -501,7 +510,7 @@
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/emailInfo" />
+                            app:layout_constraintTop_toBottomOf="@id/emailInfoResult" />
 
                         <TextView
                             android:id="@+id/phoneInfoResult"
@@ -657,12 +666,10 @@
                             android:id="@+id/streetInfoResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_2sdp"
                             android:text="Linkon Street"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/streetInfo"
                             app:layout_constraintStart_toEndOf="@id/streetInfo"
                             app:layout_constraintTop_toTopOf="@id/streetInfo" />
 
@@ -675,19 +682,21 @@
                             android:textColor="@color/primary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
+                            app:layout_constraintEnd_toStartOf="@id/locationInfoResult"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toBottomOf="@id/streetInfo" />
 
                         <TextView
                             android:id="@+id/locationInfoResult"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_2sdp"
                             android:text="Kalashnagar, Rajshahi"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/locationInfo"
+                            android:ellipsize="none"
+                            android:maxLines="4"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/locationInfo"
                             app:layout_constraintTop_toTopOf="@id/locationInfo" />
 
@@ -701,7 +710,7 @@
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/locationInfo" />
+                            app:layout_constraintTop_toBottomOf="@id/locationInfoResult" />
 
                         <TextView
                             android:id="@+id/latitudeInfo"
@@ -719,14 +728,24 @@
                             android:id="@+id/latitudeInfoResult"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:padding="@dimen/_2sdp"
                             android:text="Lati"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/latitudeInfo"
                             app:layout_constraintStart_toEndOf="@id/latitudeInfo"
                             app:layout_constraintTop_toTopOf="@id/latitudeInfo" />
+
+                        <TextView
+                            android:id="@+id/longitudeInfo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/_25sdp"
+                            android:text="Longitude: "
+                            android:textColor="@color/primary_text"
+                            android:textSize="@dimen/_14ssp"
+                            android:textStyle="normal"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/latitudeInfo" />
 
                         <TextView
                             android:id="@+id/longitudeInfoResult"
@@ -736,21 +755,9 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/latitudeInfo"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@id/latitudeInfo" />
-
-                        <TextView
-                            android:id="@+id/longitudeInfo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Latitude: "
-                            android:textColor="@color/primary_text"
-                            android:textSize="@dimen/_14ssp"
-                            android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/longitudeInfoResult"
-                            app:layout_constraintEnd_toStartOf="@id/longitudeInfoResult"
-                            app:layout_constraintTop_toTopOf="@id/longitudeInfoResult" />
+                            android:paddingBottom="@dimen/_10sdp"
+                            app:layout_constraintStart_toEndOf="@id/longitudeInfo"
+                            app:layout_constraintTop_toTopOf="@id/longitudeInfo" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -761,6 +768,7 @@
                     android:id="@+id/cardEmployment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="@dimen/_4sdp"
                     app:cardUseCompatPadding="true"
@@ -806,7 +814,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/companyName"
                             app:layout_constraintStart_toEndOf="@id/companyName"
                             app:layout_constraintTop_toTopOf="@id/companyName" />
 
@@ -830,7 +837,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/companyTitle"
                             app:layout_constraintStart_toEndOf="@id/companyTitle"
                             app:layout_constraintTop_toTopOf="@id/companyTitle" />
 
@@ -854,7 +860,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/companyDepartment"
                             app:layout_constraintStart_toEndOf="@id/companyDepartment"
                             app:layout_constraintTop_toTopOf="@id/companyDepartment" />
 
@@ -890,7 +895,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/companyStreet"
                             app:layout_constraintStart_toEndOf="@id/companyStreet"
                             app:layout_constraintTop_toTopOf="@id/companyStreet" />
 
@@ -908,14 +912,17 @@
 
                         <TextView
                             android:id="@+id/companyLocationResult"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Bangladesh"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/companyLocation"
+                            android:ellipsize="none"
+                            android:maxLines="2"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/companyLocation"
+                            android:paddingBottom="@dimen/_10sdp"
                             app:layout_constraintTop_toTopOf="@id/companyLocation" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -926,6 +933,7 @@
                     android:id="@+id/cardFinancial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_background"
                     app:cardCornerRadius="@dimen/_4sdp"
                     app:cardElevation="@dimen/_4sdp"
                     app:cardUseCompatPadding="true"
@@ -982,7 +990,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/cardNumberInfo"
                             app:layout_constraintStart_toEndOf="@id/cardNumberInfo"
                             app:layout_constraintTop_toTopOf="@id/cardNumberInfo" />
 
@@ -1006,7 +1013,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/cardTypeInfo"
                             app:layout_constraintStart_toEndOf="@id/cardTypeInfo"
                             app:layout_constraintTop_toTopOf="@id/cardTypeInfo" />
 
@@ -1030,7 +1036,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/bankCurrencyInfo"
                             app:layout_constraintStart_toEndOf="@id/bankCurrencyInfo"
                             app:layout_constraintTop_toTopOf="@id/bankCurrencyInfo" />
 
@@ -1042,7 +1047,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/bankCurrencyInfo"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="@id/bankCurrencyInfo" />
 
@@ -1055,7 +1059,6 @@
                             android:textColor="@color/primary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/cardExpiresInfoResult"
                             app:layout_constraintEnd_toStartOf="@id/cardExpiresInfoResult"
                             app:layout_constraintTop_toTopOf="@id/cardExpiresInfoResult" />
 
@@ -1080,7 +1083,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/cardIBANInfo"
                             app:layout_constraintStart_toEndOf="@id/cardIBANInfo"
                             app:layout_constraintTop_toTopOf="@id/cardIBANInfo" />
 
@@ -1117,7 +1119,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/coinInfo"
                             app:layout_constraintStart_toEndOf="@id/coinInfo"
                             app:layout_constraintTop_toTopOf="@id/coinInfo" />
 
@@ -1135,13 +1136,15 @@
 
                         <TextView
                             android:id="@+id/cryptoWalletInfoResult"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="y2usgasdui4k43"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/cryptoWalletInfo"
+                            android:ellipsize="none"
+                            android:maxLines="2"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/cryptoWalletInfo"
                             app:layout_constraintTop_toTopOf="@id/cryptoWalletInfo" />
 
@@ -1155,7 +1158,7 @@
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
                             app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/cryptoWalletInfo" />
+                            app:layout_constraintTop_toBottomOf="@id/cryptoWalletInfoResult" />
 
                         <TextView
                             android:id="@+id/cryptoNetworkInfoResult"
@@ -1165,7 +1168,7 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/cryptoNetworkInfo"
+                            android:paddingBottom="@dimen/_10sdp"
                             app:layout_constraintStart_toEndOf="@id/cryptoNetworkInfo"
                             app:layout_constraintTop_toTopOf="@id/cryptoNetworkInfo" />
 
@@ -1194,6 +1197,7 @@
                     android:id="@+id/cardAdditional"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/card_background"
                     android:paddingBottom="@dimen/_10sdp"
                     android:visibility="visible"
                     app:cardCornerRadius="@dimen/_4sdp"
@@ -1253,7 +1257,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/credentialsPasswordInfo"
                             app:layout_constraintStart_toEndOf="@id/credentialsPasswordInfo"
                             app:layout_constraintTop_toTopOf="@id/credentialsPasswordInfo" />
 
@@ -1277,7 +1280,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/credentialsEINInfo"
                             app:layout_constraintStart_toEndOf="@id/credentialsEINInfo"
                             app:layout_constraintTop_toTopOf="@id/credentialsEINInfo" />
 
@@ -1301,7 +1303,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/credentialsSSNInfo"
                             app:layout_constraintStart_toEndOf="@id/credentialsSSNInfo"
                             app:layout_constraintTop_toTopOf="@id/credentialsSSNInfo" />
 
@@ -1325,7 +1326,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/credentialsRoleInfo"
                             app:layout_constraintStart_toEndOf="@id/credentialsRoleInfo"
                             app:layout_constraintTop_toTopOf="@id/credentialsRoleInfo" />
 
@@ -1362,7 +1362,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/iPInfo"
                             app:layout_constraintStart_toEndOf="@id/iPInfo"
                             app:layout_constraintTop_toTopOf="@id/iPInfo" />
 
@@ -1386,7 +1385,6 @@
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/mACAddressInfo"
                             app:layout_constraintStart_toEndOf="@id/mACAddressInfo"
                             app:layout_constraintTop_toTopOf="@id/mACAddressInfo" />
 
@@ -1404,13 +1402,15 @@
 
                         <TextView
                             android:id="@+id/userAgentInfoResult"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:text="Linux"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
                             android:textStyle="normal"
-                            app:layout_constraintBottom_toBottomOf="@id/userAgentInfo"
+                            android:ellipsize="none"
+                            android:maxLines="5"
+                            app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toEndOf="@id/userAgentInfo"
                             app:layout_constraintTop_toTopOf="@id/userAgentInfo" />
 
@@ -1426,9 +1426,9 @@
                             android:textAlignment="center"
                             android:textColor="@color/secondary_text"
                             android:textSize="@dimen/_14ssp"
-                            android:textStyle="italic"
+                            android:textStyle="bold|italic"
                             app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toBottomOf="@id/userAgentInfo" />
+                            app:layout_constraintTop_toBottomOf="@id/userAgentInfoResult" />
 
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

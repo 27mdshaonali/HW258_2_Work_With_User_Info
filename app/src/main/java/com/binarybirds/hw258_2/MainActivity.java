@@ -77,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerState = findViewById(R.id.spinnerState);
         spinnerSortBy = findViewById(R.id.spinnerSortBy);
         userRoundedImage = findViewById(R.id.userRoundedImage);
+
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
 
         // Receive intent data
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
             fullNameSet.setText("User not found!");
             username.setText("User not found!");
         }
+
+
 
         ArrayList<String> genderList = new ArrayList<>();
         genderList.add("Select Gender");
@@ -316,7 +319,16 @@ public class MainActivity extends AppCompatActivity {
 
             String fullName = user.optString("firstName") + " " + user.optString("lastName");
             holder.tvFullName.setText(fullName);
-            holder.tvPosition.setText(user.optString("role"));
+
+            JSONObject company = user.optJSONObject("company");
+            if (company != null) {
+                String title = company.optString("title");
+                holder.tvPosition.setText(title);
+            } else {
+                holder.tvPosition.setText("N/A"); // fallback
+            }
+
+
             holder.tvPhone.setText(user.optString("phone"));
             holder.tvEmail.setText(user.optString("email"));
             holder.bloodUser.setText(user.optString("bloodGroup"));
@@ -331,6 +343,7 @@ public class MainActivity extends AppCompatActivity {
             holder.cardUser.setOnClickListener(v -> {
                 Intent intent = new Intent(context, UserDetailsActivity.class);
                 intent.putExtra("userDataJson", user.toString());
+                intent.putExtra("loggedEmail", loggedEmail);
                 context.startActivity(intent);
             });
 
