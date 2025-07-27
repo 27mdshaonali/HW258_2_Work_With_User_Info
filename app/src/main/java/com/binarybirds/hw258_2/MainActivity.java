@@ -4,6 +4,7 @@ import static android.view.View.GONE;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
 
         username = findViewById(R.id.username);
         fullNameSet = findViewById(R.id.fullName);

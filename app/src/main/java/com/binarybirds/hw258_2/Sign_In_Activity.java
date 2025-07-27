@@ -1,13 +1,15 @@
 package com.binarybirds.hw258_2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
-import androidx.appcompat.widget.AppCompatCheckBox;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -27,7 +29,6 @@ import java.util.ArrayList;
 public class Sign_In_Activity extends AppCompatActivity {
 
     TextInputEditText userSignInUserName, userSignInPassword;
-    AppCompatCheckBox checkBox;
     AppCompatTextView forgotPassword, signUp;
     AppCompatButton signInButton;
 
@@ -52,10 +53,15 @@ public class Sign_In_Activity extends AppCompatActivity {
     private void initializeView() {
         userSignInUserName = findViewById(R.id.userSignInUserName);
         userSignInPassword = findViewById(R.id.userSignInPassword);
-        checkBox = findViewById(R.id.checkBox);
         forgotPassword = findViewById(R.id.forgotPassword);
         signUp = findViewById(R.id.signUp);
         signInButton = findViewById(R.id.signInButton);
+
+        if (!internetConnectivity()) {
+            signInButton.setEnabled(false);
+            Toast.makeText(getApplicationContext(), "Please check your internet connection!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         signUp.setOnClickListener(v -> startActivity(new Intent(this, Sign_Up_Activity.class)));
         forgotPassword.setOnClickListener(v -> startActivity(new Intent(this, MainActivity.class)));
@@ -74,51 +80,59 @@ public class Sign_In_Activity extends AppCompatActivity {
     }
 
     private void fetchUserList(String username, String password) {
-        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, USER_INFO_URL, null,
-                response -> {
-                    try {
-                        JSONArray users = response.getJSONArray("users");
+        JsonObjectRequest objectRequest = new JsonObjectRequest(Request.Method.GET, USER_INFO_URL, null, response -> {
+            try {
+                JSONArray users = response.getJSONArray("users");
 
-                        boolean isUserFound = false;
+                boolean isUserFound = false;
+                userList.clear();
 
-                        for (int i = 0; i < users.length(); i++) {
-                            JSONObject user = users.getJSONObject(i);
-                            userList.add(user); // Add full user object to the list
+                for (int i = 0; i < users.length(); i++) {
+                    JSONObject user = users.getJSONObject(i);
+                    userList.add(user);
 
-                            String u = user.optString("username");
-                            String p = user.optString("password");
-                            String gender = user.optString("gender");
-                            String profileImage = user.optString("image");
-                            String userRole = user.optString("role");
+                    String u = user.optString("username");
+                    String p = user.optString("password");
+                    String gender = user.optString("gender");
+                    String profileImage = user.optString("image");
+                    String userRole = user.optString("role");
 
-                            if (username.equals(u) && password.equals(p)) {
-                                isUserFound = true;
+                    if (username.equals(u) && password.equals(p)) {
+                        isUserFound = true;
 
-                                Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
 
-                                Intent intent = new Intent(Sign_In_Activity.this, MainActivity.class);
-                                intent.putExtra("userListJson", users.toString()); // send full array
-                                intent.putExtra("loggedUsername", username);
-                                intent.putExtra("loggedGender", gender);
-                                intent.putExtra("loggedProfileImage", profileImage);
-                                intent.putExtra("loggedRole", userRole);
-                                startActivity(intent);
-                                break;
-                            }
-                        }
-
-                        if (!isUserFound) {
-                            Toast.makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
-                        }
-
-                    } catch (Exception e) {
-                        Toast.makeText(getApplicationContext(), "Error reading user list", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Sign_In_Activity.this, MainActivity.class);
+                        intent.putExtra("userListJson", users.toString());
+                        intent.putExtra("loggedUsername", username);
+                        intent.putExtra("loggedGender", gender);
+                        intent.putExtra("loggedProfileImage", profileImage);
+                        intent.putExtra("loggedRole", userRole);
+                        startActivity(intent);
+                        break;
                     }
-                },
-                error -> Toast.makeText(getApplicationContext(), "Volley error occurred", Toast.LENGTH_SHORT).show()
-        );
+                }
+
+                if (!isUserFound) {
+                    Toast.makeText(getApplicationContext(), "Invalid Credentials", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getApplicationContext(), "Error reading user list", Toast.LENGTH_SHORT).show();
+            }
+        }, error -> {
+            error.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Volley error occurred", Toast.LENGTH_SHORT).show();
+        });
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(objectRequest);
+    }
+
+    public boolean internetConnectivity() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }
