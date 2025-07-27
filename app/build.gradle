@@ -77,4 +77,8 @@ dependencies {
     implementation "androidx.room:room-runtime:2.7.2"
     annotationProcessor "androidx.room:room-compiler:2.7.2"
 
+    //qr code
+    implementation 'com.google.zxing:core:3.5.1'
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+
 }

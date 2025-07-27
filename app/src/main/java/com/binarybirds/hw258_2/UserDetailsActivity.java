@@ -2,11 +2,12 @@ package com.binarybirds.hw258_2;
 
 import static android.view.View.GONE;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -22,6 +25,10 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class UserDetailsActivity extends AppCompatActivity {
     RoundedImageView imageCall, imageMessage, imageWhatsapp, imageEmail;
@@ -49,7 +56,6 @@ public class UserDetailsActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-
 
 
         //============================ 🔐 Security and Technical ====================================
@@ -173,14 +179,7 @@ public class UserDetailsActivity extends AppCompatActivity {
                 if (hair != null) {
                     hairColor = hair.optString("color");
                     hairType = hair.optString("type");
-
-                    if (!hairColor.isEmpty()) {
-                        Toast.makeText(this, "Hair Color: " + hairColor, Toast.LENGTH_SHORT).show();
-                    }
-
-                    if (!hairType.isEmpty()) {
-                        Toast.makeText(this, "Hair Type: " + hairType, Toast.LENGTH_SHORT).show();
-                    }
+                    //Toast.makeText(this, "Hair Color: " + hairColor + ", Type: " + hairType, Toast.LENGTH_SHORT).show();
                 }
 
                 // Address (nested object with nested coordinates)
@@ -286,6 +285,10 @@ public class UserDetailsActivity extends AppCompatActivity {
                 userEmail.setText(email);
                 userNumber.setText(phone);
 
+                userBloodGroup.setOnClickListener(v -> {
+                    startActivity(new Intent(UserDetailsActivity.this, QRGeneratorActivity.class));
+                });
+
 
                 //================================= Personal info & Contacts ====================================
 
@@ -301,7 +304,10 @@ public class UserDetailsActivity extends AppCompatActivity {
                 universityNameResult.setText(university);
                 genderResult.setText(gender);
                 bloodResult.setText(bloodGroup);
-                birthDateResult.setText(birthDate);
+
+                String formatedDate = formatDate(birthDate);
+                birthDateResult.setText(formatedDate);
+
                 ageResult.setText(age);
 
                 emailInfoResult.setText(email);
@@ -432,6 +438,18 @@ public class UserDetailsActivity extends AppCompatActivity {
 
                 Picasso.get().load(image).into(ppImage);
 
+                checkStoragePermission();
+
+                String titles = title;
+
+
+                ppImage.setOnClickListener(v -> {
+                    QRUtils.showQRCodeDialog(
+
+                            UserDetailsActivity.this, ""+firstName+" "+lastName, "@"+username, ""+titles, ""+phone, ""+email);
+                });
+
+
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Error parsing JSON data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -459,5 +477,26 @@ public class UserDetailsActivity extends AppCompatActivity {
         }
     }
 
+
+    private void checkStoragePermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 100);
+        }
+    }
+
+
+    private String formatDate(String isoDate) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            inputFormat.setTimeZone(TimeZone.getTimeZone("UTC")); // Make sure it's UTC if needed
+            Date date = inputFormat.parse(isoDate);
+
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy, hh:mm a");
+            outputFormat.setTimeZone(TimeZone.getDefault()); // Local timezone
+            return outputFormat.format(date);
+        } catch (Exception e) {
+            return isoDate; // Fallback to raw if parsing fails
+        }
+    }
 
 }
